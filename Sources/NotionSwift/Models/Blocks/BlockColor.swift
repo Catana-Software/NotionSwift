@@ -3,7 +3,7 @@
 //
 import Foundation
 
-public enum BlockColor: Equatable {
+public enum BlockColor: Equatable, Sendable {
     case `default`
     case gray
     case brown

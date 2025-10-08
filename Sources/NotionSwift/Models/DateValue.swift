@@ -47,3 +47,4 @@ extension DateValue: Codable {
 }
 
 extension DateValue: Equatable {}
+extension DateValue: Sendable {}

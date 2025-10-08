@@ -24,3 +24,4 @@ extension WriteBlock: Encodable {
 }
 
 extension WriteBlock: Equatable {}
+extension WriteBlock: Sendable {}

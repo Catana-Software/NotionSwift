@@ -104,9 +104,15 @@ extension MentionTypeValue.MentionType: Codable {
 }
 
 extension MentionTypeValue.PageMentionValue: Codable {}
-extension MentionTypeValue.DatabaseMentionValue: Codable {}
-
-extension MentionTypeValue.DatabaseMentionValue: Equatable {}
-extension MentionTypeValue.MentionType: Equatable {}
 extension MentionTypeValue.PageMentionValue: Equatable {}
+extension MentionTypeValue.PageMentionValue: Sendable {}
+
+extension MentionTypeValue.DatabaseMentionValue: Codable {}
+extension MentionTypeValue.DatabaseMentionValue: Equatable {}
+extension MentionTypeValue.DatabaseMentionValue: Sendable {}
+
+extension MentionTypeValue.MentionType: Equatable {}
+extension MentionTypeValue.MentionType: Sendable {}
+
 extension MentionTypeValue: Equatable {}
+extension MentionTypeValue: Sendable {}

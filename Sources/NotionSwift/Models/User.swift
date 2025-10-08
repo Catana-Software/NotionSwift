@@ -43,12 +43,15 @@ public struct User {
 }
 
 extension User.UserType: Equatable {}
+extension User.UserType: Sendable {}
 
 extension User.Person: Codable {}
 extension User.Person: Equatable {}
+extension User.Person: Sendable {}
 
 extension User.Bot: Codable {}
 extension User.Bot: Equatable {}
+extension User.Bot: Sendable {}
 
 extension User: Codable {
     enum CodingKeys: String, CodingKey {
@@ -112,3 +115,4 @@ extension User: Codable {
 extension User: Identifiable {}
 
 extension User: Equatable {}
+extension User: Sendable {}

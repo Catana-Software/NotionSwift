@@ -66,3 +66,4 @@ extension IconFile: Codable {
 }
 
 extension IconFile: Equatable {}
+extension IconFile: Sendable {}

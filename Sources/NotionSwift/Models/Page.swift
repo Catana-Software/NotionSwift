@@ -92,3 +92,4 @@ extension Page {
 }
 
 extension Page: Equatable {}
+extension Page: Sendable {}

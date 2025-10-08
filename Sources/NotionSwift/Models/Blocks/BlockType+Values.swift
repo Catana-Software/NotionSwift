@@ -6,7 +6,7 @@ import Foundation
 
 public extension BlockType {
 
-    struct ChildrenBlockValue: Equatable {
+    struct ChildrenBlockValue: Equatable, Sendable {
         /// field used only for encoding for adding/appending new blocks
         public let children: [BlockType]?
 
@@ -17,7 +17,7 @@ public extension BlockType {
         public static let none = ChildrenBlockValue(children: nil)
     }
 
-    struct TextAndChildrenBlockValue: Equatable {
+    struct TextAndChildrenBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -46,7 +46,7 @@ public extension BlockType {
         }
     }
 
-    struct HeadingBlockValue: Equatable {
+    struct HeadingBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -69,7 +69,7 @@ public extension BlockType {
         }
     }
 
-    struct ToDoBlockValue: Equatable {
+    struct ToDoBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -96,7 +96,7 @@ public extension BlockType {
         }
     }
 
-    struct ChildPageBlockValue: Equatable {
+    struct ChildPageBlockValue: Equatable, Sendable {
         public let title: String
 
         public init(title: String) {
@@ -104,7 +104,7 @@ public extension BlockType {
         }
     }
 
-    struct ChildDatabaseBlockValue: Equatable {
+    struct ChildDatabaseBlockValue: Equatable, Sendable {
         public let title: String
 
         public init(title: String) {
@@ -112,7 +112,7 @@ public extension BlockType {
         }
     }
 
-    struct CodeBlockValue: Equatable {
+    struct CodeBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -132,7 +132,7 @@ public extension BlockType {
         }
     }
 
-    struct CalloutBlockValue: Equatable {
+    struct CalloutBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -159,7 +159,7 @@ public extension BlockType {
         }
     }
 
-    struct QuoteBlockValue: Equatable {
+    struct QuoteBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         public let color: BlockColor
         @available(*, deprecated, renamed: "richText")
@@ -183,7 +183,7 @@ public extension BlockType {
         }
     }
 
-    struct EmbedBlockValue: Equatable {
+    struct EmbedBlockValue: Equatable, Sendable {
         public let url: String
         public let caption: [RichText]
 
@@ -193,7 +193,7 @@ public extension BlockType {
         }
     }
 
-    struct BookmarkBlockValue: Equatable {
+    struct BookmarkBlockValue: Equatable, Sendable {
         public let url: String
         public let caption: [RichText]
 
@@ -203,7 +203,7 @@ public extension BlockType {
         }
     }
 
-    struct FileBlockValue: Equatable {
+    struct FileBlockValue: Equatable, Sendable {
         public let file: FileFile
         public let caption: [RichText]
 
@@ -213,7 +213,7 @@ public extension BlockType {
         }
     }
 
-    struct EquationBlockValue: Equatable {
+    struct EquationBlockValue: Equatable, Sendable {
         public let expression: String
 
         public init(expression: String) {
@@ -221,7 +221,7 @@ public extension BlockType {
         }
     }
 
-    struct TableOfContentsBlockValue: Equatable {
+    struct TableOfContentsBlockValue: Equatable, Sendable {
         public let color: BlockColor
         
         public init(color: BlockColor) {
@@ -229,18 +229,18 @@ public extension BlockType {
         }
     }
     
-    enum LinkToPageBlockValue: Equatable {
+    enum LinkToPageBlockValue: Equatable, Sendable {
         case page(Page.Identifier)
         case database(Database.Identifier)
         case unknown
     }
 
-    enum SyncedBlockValue: Equatable {
+    enum SyncedBlockValue: Equatable, Sendable {
         case originalBlock
         case reference(Block.Identifier)
     }
 
-    struct TemplateBlockValue: Equatable {
+    struct TemplateBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -261,7 +261,7 @@ public extension BlockType {
         }
     }
     
-    struct TableBlockValue: Equatable {
+    struct TableBlockValue: Equatable, Sendable {
         public let tableWidth: Int
         public let hasColumnHeader: Bool
         public let hasRowHeader: Bool
@@ -276,7 +276,7 @@ public extension BlockType {
         }
     }
     
-    struct TableRowBlockValue: Equatable {
+    struct TableRowBlockValue: Equatable, Sendable {
         public let cells: [[RichText]]
         
         public init(cells: [[RichText]]) {

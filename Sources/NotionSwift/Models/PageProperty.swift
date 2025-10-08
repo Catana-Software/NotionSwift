@@ -531,14 +531,33 @@ extension PagePropertyType.RollupPropertyValue: Codable {
 }
 
 extension PageProperty: Equatable {}
+extension PageProperty: Sendable {}
+
 extension PagePropertyType.FilesPropertyValue.FileLink: Equatable {}
+extension PagePropertyType.FilesPropertyValue.FileLink: Sendable {}
+
 extension PagePropertyType.FilesPropertyValue: Equatable {}
+extension PagePropertyType.FilesPropertyValue: Sendable {}
+
 extension PagePropertyType.FormulaPropertyValue: Equatable {}
+extension PagePropertyType.FormulaPropertyValue: Sendable {}
+
 extension PagePropertyType.MultiSelectPropertyValue: Equatable {}
+extension PagePropertyType.MultiSelectPropertyValue: Sendable {}
+
 extension PagePropertyType.RollupPropertyValue: Equatable {}
+extension PagePropertyType.RollupPropertyValue: Sendable {}
+
 extension PagePropertyType.SelectPropertyValue: Equatable {}
+extension PagePropertyType.SelectPropertyValue: Sendable {}
+
 extension PagePropertyType.StatusPropertyValue: Codable {}
 extension PagePropertyType.StatusPropertyValue: Equatable {}
+extension PagePropertyType.StatusPropertyValue: Sendable {}
+
 extension PagePropertyType.UniqueIDPropertyValue: Decodable {}
 extension PagePropertyType.UniqueIDPropertyValue: Equatable {}
+extension PagePropertyType.UniqueIDPropertyValue: Sendable {}
+
 extension PagePropertyType: Equatable {}
+extension PagePropertyType: Sendable {}

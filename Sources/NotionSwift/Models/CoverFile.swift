@@ -47,3 +47,4 @@ extension CoverFile: Codable {
 }
 
 extension CoverFile: Equatable {}
+extension CoverFile: Sendable {}

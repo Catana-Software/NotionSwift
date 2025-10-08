@@ -11,3 +11,4 @@ public struct ErrorResponse: Equatable {
 }
 
 extension ErrorResponse: Decodable {}
+extension ErrorResponse: Sendable {}

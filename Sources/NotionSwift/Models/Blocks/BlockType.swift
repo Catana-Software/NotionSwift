@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum BlockType: Equatable {
+public enum BlockType: Equatable, Sendable {
     case paragraph(TextAndChildrenBlockValue)
     case heading1(HeadingBlockValue)
     case heading2(HeadingBlockValue)

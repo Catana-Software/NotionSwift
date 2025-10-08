@@ -79,3 +79,4 @@ extension ReadBlock: Decodable {
 @available(iOS 13.0, *)
 extension ReadBlock: Identifiable {}
 extension ReadBlock: Equatable {}
+extension ReadBlock: Sendable {}

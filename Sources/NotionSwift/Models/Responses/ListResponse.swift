@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ListResponse<T: Equatable> {
+public struct ListResponse<T> {
     public let results: [T]
     public let nextCursor: String?
     public let hasMore: Bool
@@ -27,4 +27,5 @@ extension ListResponse: Decodable where T: Decodable {
     }
 }
 
-extension ListResponse: Equatable {}
+extension ListResponse: Equatable where T: Equatable {}
+extension ListResponse: Sendable where T: Sendable {}

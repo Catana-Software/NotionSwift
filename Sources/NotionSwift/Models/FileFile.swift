@@ -58,3 +58,4 @@ extension FileFile: Codable {
 }
 
 extension FileFile: Equatable {}
+extension FileFile: Sendable {}

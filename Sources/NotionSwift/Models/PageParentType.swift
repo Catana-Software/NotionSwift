@@ -52,3 +52,4 @@ extension PageParentType: Codable {
 }
 
 extension PageParentType: Equatable {}
+extension PageParentType: Sendable {}

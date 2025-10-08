@@ -35,3 +35,4 @@ extension UpdateBlock: Encodable {
 }
 
 extension UpdateBlock: Equatable {}
+extension UpdateBlock: Sendable {}

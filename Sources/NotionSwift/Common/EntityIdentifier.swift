@@ -43,3 +43,5 @@ extension EntityIdentifier where T == UUIDv4 {
         self.init(UUIDv4())
     }
 }
+
+extension EntityIdentifier: Sendable where T: Sendable {}

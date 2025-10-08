@@ -5,7 +5,7 @@
 import Foundation
 
 public struct RichText {
-    public struct Annotations: Equatable {
+    public struct Annotations: Equatable, Sendable {
         public let bold: Bool
         public let italic: Bool
         public let strikethrough: Bool
@@ -172,6 +172,11 @@ extension RichTextType.TextTypeValue: Codable {
 extension RichTextType.EquationTypeValue: Codable {}
 
 extension RichText: Equatable {}
+extension RichText: Sendable {}
 extension RichTextType.EquationTypeValue: Equatable {}
+extension RichTextType.EquationTypeValue: Sendable {}
 extension RichTextType.TextTypeValue: Equatable {}
+extension RichTextType.TextTypeValue: Sendable {}
 extension RichTextType: Equatable {}
+extension RichTextType: Sendable {}
+
