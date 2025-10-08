@@ -26,3 +26,5 @@ extension ListResponse: Decodable where T: Decodable {
         case hasMore = "has_more"
     }
 }
+
+extension ListResponse: Equatable {}
