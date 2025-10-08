@@ -10,7 +10,7 @@ import Foundation
 
     public func page(
         pageId: Page.Identifier,
-        completed: @escaping (Result<Page, NotionClientError>) -> Void
+        completed: @Sendable @escaping (Result<Page, NotionClientError>) -> Void
     ) {
         networkClient.get(
             urlBuilder.url(path: "/v1/pages/{identifier}", identifier: pageId),
@@ -21,7 +21,7 @@ import Foundation
 
     public func pageCreate(
         request: PageCreateRequest,
-        completed: @escaping (Result<Page, NotionClientError>) -> Void
+        completed: @Sendable @escaping (Result<Page, NotionClientError>) -> Void
     ) {
         networkClient.post(
             urlBuilder.url(path: "/v1/pages"),
@@ -34,7 +34,7 @@ import Foundation
     public func pageUpdate(
         pageId: Page.Identifier,
         request: PageUpdateRequest,
-        completed: @escaping (Result<Page, NotionClientError>) -> Void
+        completed: @Sendable @escaping (Result<Page, NotionClientError>) -> Void
     ) {
         networkClient.patch(
             urlBuilder.url(path: "/v1/pages/{identifier}", identifier: pageId),
@@ -43,4 +43,5 @@ import Foundation
             completed: completed
         )
     }
+     
 }
