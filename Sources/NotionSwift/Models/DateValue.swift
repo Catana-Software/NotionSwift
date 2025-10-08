@@ -45,3 +45,5 @@ extension DateValue: Codable {
         try container.encode(value)
     }
 }
+
+extension DateValue: Equatable {}

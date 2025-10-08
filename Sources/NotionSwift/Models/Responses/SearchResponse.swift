@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum SearchResultItem {
+public enum SearchResultItem: Equatable {
     case page(Page)
     case database(Database)
     case unknown

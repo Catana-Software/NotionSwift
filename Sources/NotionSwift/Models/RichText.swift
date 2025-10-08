@@ -117,7 +117,9 @@ extension RichText: Codable {
         try type.encode(to: encoder)
     }
 }
+
 extension RichText.Annotations: Codable {}
+
 extension RichTextType: Codable {
     enum CodingKeys: String, CodingKey {
         case type
@@ -168,3 +170,8 @@ extension RichTextType.TextTypeValue: Codable {
     }
 }
 extension RichTextType.EquationTypeValue: Codable {}
+
+extension RichText: Equatable {}
+extension RichTextType.EquationTypeValue: Equatable {}
+extension RichTextType.TextTypeValue: Equatable {}
+extension RichTextType: Equatable {}

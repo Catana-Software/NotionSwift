@@ -105,3 +105,8 @@ extension MentionTypeValue.MentionType: Codable {
 
 extension MentionTypeValue.PageMentionValue: Codable {}
 extension MentionTypeValue.DatabaseMentionValue: Codable {}
+
+extension MentionTypeValue.DatabaseMentionValue: Equatable {}
+extension MentionTypeValue.MentionType: Equatable {}
+extension MentionTypeValue.PageMentionValue: Equatable {}
+extension MentionTypeValue: Equatable {}

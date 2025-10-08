@@ -530,5 +530,15 @@ extension PagePropertyType.RollupPropertyValue: Codable {
     
 }
 
+extension PageProperty: Equatable {}
+extension PagePropertyType.FilesPropertyValue.FileLink: Equatable {}
+extension PagePropertyType.FilesPropertyValue: Equatable {}
+extension PagePropertyType.FormulaPropertyValue: Equatable {}
+extension PagePropertyType.MultiSelectPropertyValue: Equatable {}
+extension PagePropertyType.RollupPropertyValue: Equatable {}
+extension PagePropertyType.SelectPropertyValue: Equatable {}
 extension PagePropertyType.StatusPropertyValue: Codable {}
+extension PagePropertyType.StatusPropertyValue: Equatable {}
 extension PagePropertyType.UniqueIDPropertyValue: Decodable {}
+extension PagePropertyType.UniqueIDPropertyValue: Equatable {}
+extension PagePropertyType: Equatable {}

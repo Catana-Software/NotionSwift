@@ -56,3 +56,5 @@ extension FileFile: Codable {
         }
     }
 }
+
+extension FileFile: Equatable {}

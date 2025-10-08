@@ -21,5 +21,21 @@ final class DateValueTests: XCTestCase {
 
         XCTAssertEqual(result, "\"2021-11-10T23:22:45.000Z\"")
     }
+    
+    func testEquality() {
+        
+        let a = DateValue
+            .dateAndTime(buildTimeDate(day: 10, month: 11, year: 2021, hour: 23, min: 22, sec: 45))
+        
+        let b = DateValue
+            .dateAndTime(buildTimeDate(day: 10, month: 11, year: 2021, hour: 23, min: 22, sec: 45))
+        
+        let c = DateValue
+            .dateAndTime(buildTimeDate(day: 10, month: 11, year: 2021, hour: 23, min: 22, sec: 46))
+        
+        XCTAssertEqual(a, b)
+        XCTAssertNotEqual(b,  c)
+        
+    }
 }
 

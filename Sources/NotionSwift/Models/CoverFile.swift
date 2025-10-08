@@ -45,3 +45,5 @@ extension CoverFile: Codable {
         }
     }
 }
+
+extension CoverFile: Equatable {}

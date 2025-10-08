@@ -22,3 +22,5 @@ extension WriteBlock: Encodable {
         try container.encode("block", forKey: .object)
     }
 }
+
+extension WriteBlock: Equatable {}

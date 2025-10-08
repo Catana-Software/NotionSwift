@@ -90,3 +90,5 @@ extension Page {
         return richText
     }
 }
+
+extension Page: Equatable {}

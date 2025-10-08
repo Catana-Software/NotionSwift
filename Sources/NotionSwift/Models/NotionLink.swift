@@ -13,3 +13,4 @@ public struct NotionLink {
 }
 
 extension NotionLink: Codable {}
+extension NotionLink: Equatable {}

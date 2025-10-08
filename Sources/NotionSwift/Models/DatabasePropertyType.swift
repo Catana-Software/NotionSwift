@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum DatabasePropertyType {
+public enum DatabasePropertyType: Equatable {
     case title
     case richText
     case number(NumberPropertyConfiguration)
@@ -29,7 +29,7 @@ public enum DatabasePropertyType {
 }
 
 extension DatabasePropertyType {
-    public enum NumberPropertyConfiguration: String {
+    public enum NumberPropertyConfiguration: String, Equatable {
         case number
         case numberWithCommas = "number_with_commas"
         case percent
@@ -46,7 +46,7 @@ extension DatabasePropertyType {
 }
 
 extension DatabasePropertyType {
-    public struct SelectOption {
+    public struct SelectOption:Equatable {
         public typealias Identifier = EntityIdentifier<SelectOption, UUIDv4>
         public let name: String
         public let id: Identifier
@@ -65,7 +65,7 @@ extension DatabasePropertyType {
 }
 
 extension DatabasePropertyType {
-    public struct RelationPropertyConfiguration {
+    public struct RelationPropertyConfiguration: Equatable {
         public let databaseId: Database.Identifier
         public let syncedPropertyName: String?
         public let syncedPropertyId: DatabaseProperty.Identifier?
@@ -84,7 +84,7 @@ extension DatabasePropertyType {
 
 extension DatabasePropertyType {
 
-    public struct RollupPropertyConfiguration {
+    public struct RollupPropertyConfiguration: Equatable {
         public let relationPropertyName: String
         public let relationPropertyId: DatabaseProperty.Identifier
         public let rollupPropertyName: String
@@ -108,10 +108,10 @@ extension DatabasePropertyType {
 }
 
 extension DatabasePropertyType {
-    public struct StatusPropertConfirguration {
+    public struct StatusPropertConfirguration: Equatable {
         public typealias OptionIdentifier = EntityIdentifier<SelectOption, UUIDv4>
         
-        public struct StatusOption {
+        public struct StatusOption: Equatable {
             public let id: OptionIdentifier
             /// Name of the option as it appears in Notion.
             public let name: String
@@ -128,7 +128,7 @@ extension DatabasePropertyType {
             }
         }
         
-        public struct StatusGroup {
+        public struct StatusGroup: Equatable {
             public let id: OptionIdentifier
             public let name: String
             public let color: String

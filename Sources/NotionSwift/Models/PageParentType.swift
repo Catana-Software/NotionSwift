@@ -50,3 +50,5 @@ extension PageParentType: Codable {
         }
     }
 }
+
+extension PageParentType: Equatable {}

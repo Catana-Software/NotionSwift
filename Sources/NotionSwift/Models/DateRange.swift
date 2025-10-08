@@ -13,3 +13,4 @@ public struct DateRange {
 }
 
 extension DateRange: Codable {}
+extension DateRange: Equatable {}

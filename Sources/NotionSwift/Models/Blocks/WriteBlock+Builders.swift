@@ -6,14 +6,14 @@ import Foundation
 
 public extension WriteBlock {
     // Helper type
-    struct Column {
+    struct Column: Equatable {
         let children: [BlockType]
         public static func column(_ children: [BlockType]) -> Self {
             return .init(children: children)
         }
     }
     
-    struct TableRow {
+    struct TableRow: Equatable {
         let header: [RichText]?
         let cells: [[RichText]]
         

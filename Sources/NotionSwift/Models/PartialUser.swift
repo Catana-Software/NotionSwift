@@ -13,6 +13,7 @@ public struct PartialUser {
 }
 
 extension PartialUser: Codable {}
+extension PartialUser: Equatable {}
 
 @available(iOS 13.0, *)
 extension PartialUser: Identifiable {}

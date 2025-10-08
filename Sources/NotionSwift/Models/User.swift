@@ -42,8 +42,13 @@ public struct User {
     }
 }
 
+extension User.UserType: Equatable {}
+
 extension User.Person: Codable {}
+extension User.Person: Equatable {}
+
 extension User.Bot: Codable {}
+extension User.Bot: Equatable {}
 
 extension User: Codable {
     enum CodingKeys: String, CodingKey {
@@ -77,6 +82,7 @@ extension User: Codable {
         }
     }
 
+    // TODO: Further work to comply with https://developers.notion.com/reference/user
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
@@ -87,10 +93,15 @@ extension User: Codable {
         case .bot(let value):
             try container.encode(CodingKeys.bot.stringValue, forKey: .type)
             try container.encode(value, forKey: .bot)
+            try container.encode(self.id, forKey: .id)
+            try container.encode(self.name, forKey: .name)
+            try container.encode(self.avatarURL, forKey: .avatarURL)
         case .person(let value):
             try container.encode(CodingKeys.person.stringValue, forKey: .type)
             try container.encode(value, forKey: .person)
             try container.encode(self.id, forKey: .id)
+            try container.encode(self.name, forKey: .name)
+            try container.encode(self.avatarURL, forKey: .avatarURL)
         case .unknown:
             break
         }
@@ -99,3 +110,5 @@ extension User: Codable {
 
 @available(iOS 13.0, *)
 extension User: Identifiable {}
+
+extension User: Equatable {}

@@ -64,3 +64,5 @@ extension IconFile: Codable {
         }
     }
 }
+
+extension IconFile: Equatable {}

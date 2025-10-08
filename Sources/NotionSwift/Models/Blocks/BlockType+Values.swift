@@ -6,7 +6,7 @@ import Foundation
 
 public extension BlockType {
 
-    struct ChildrenBlockValue {
+    struct ChildrenBlockValue: Equatable {
         /// field used only for encoding for adding/appending new blocks
         public let children: [BlockType]?
 
@@ -17,7 +17,7 @@ public extension BlockType {
         public static let none = ChildrenBlockValue(children: nil)
     }
 
-    struct TextAndChildrenBlockValue {
+    struct TextAndChildrenBlockValue: Equatable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -46,7 +46,7 @@ public extension BlockType {
         }
     }
 
-    struct HeadingBlockValue {
+    struct HeadingBlockValue: Equatable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -69,7 +69,7 @@ public extension BlockType {
         }
     }
 
-    struct ToDoBlockValue {
+    struct ToDoBlockValue: Equatable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -96,7 +96,7 @@ public extension BlockType {
         }
     }
 
-    struct ChildPageBlockValue {
+    struct ChildPageBlockValue: Equatable {
         public let title: String
 
         public init(title: String) {
@@ -104,7 +104,7 @@ public extension BlockType {
         }
     }
 
-    struct ChildDatabaseBlockValue {
+    struct ChildDatabaseBlockValue: Equatable {
         public let title: String
 
         public init(title: String) {
@@ -112,7 +112,7 @@ public extension BlockType {
         }
     }
 
-    struct CodeBlockValue {
+    struct CodeBlockValue: Equatable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -132,7 +132,7 @@ public extension BlockType {
         }
     }
 
-    struct CalloutBlockValue {
+    struct CalloutBlockValue: Equatable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -159,7 +159,7 @@ public extension BlockType {
         }
     }
 
-    struct QuoteBlockValue {
+    struct QuoteBlockValue: Equatable {
         public let richText: [RichText]
         public let color: BlockColor
         @available(*, deprecated, renamed: "richText")
@@ -183,7 +183,7 @@ public extension BlockType {
         }
     }
 
-    struct EmbedBlockValue {
+    struct EmbedBlockValue: Equatable {
         public let url: String
         public let caption: [RichText]
 
@@ -193,7 +193,7 @@ public extension BlockType {
         }
     }
 
-    struct BookmarkBlockValue {
+    struct BookmarkBlockValue: Equatable {
         public let url: String
         public let caption: [RichText]
 
@@ -203,7 +203,7 @@ public extension BlockType {
         }
     }
 
-    struct FileBlockValue {
+    struct FileBlockValue: Equatable {
         public let file: FileFile
         public let caption: [RichText]
 
@@ -213,7 +213,7 @@ public extension BlockType {
         }
     }
 
-    struct EquationBlockValue {
+    struct EquationBlockValue: Equatable {
         public let expression: String
 
         public init(expression: String) {
@@ -221,7 +221,7 @@ public extension BlockType {
         }
     }
 
-    struct TableOfContentsBlockValue {
+    struct TableOfContentsBlockValue: Equatable {
         public let color: BlockColor
         
         public init(color: BlockColor) {
@@ -229,18 +229,18 @@ public extension BlockType {
         }
     }
     
-    enum LinkToPageBlockValue {
+    enum LinkToPageBlockValue: Equatable {
         case page(Page.Identifier)
         case database(Database.Identifier)
         case unknown
     }
 
-    enum SyncedBlockValue {
+    enum SyncedBlockValue: Equatable {
         case originalBlock
         case reference(Block.Identifier)
     }
 
-    struct TemplateBlockValue {
+    struct TemplateBlockValue: Equatable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
         public var text: [RichText] {
@@ -261,7 +261,7 @@ public extension BlockType {
         }
     }
     
-    struct TableBlockValue {
+    struct TableBlockValue: Equatable {
         public let tableWidth: Int
         public let hasColumnHeader: Bool
         public let hasRowHeader: Bool
@@ -276,7 +276,7 @@ public extension BlockType {
         }
     }
     
-    struct TableRowBlockValue {
+    struct TableRowBlockValue: Equatable {
         public let cells: [[RichText]]
         
         public init(cells: [[RichText]]) {

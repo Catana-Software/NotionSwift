@@ -5,7 +5,7 @@
 import Foundation
 
 /// Just a placeholder entity. User ReadBlock / WriteBlock structs.
-public enum Block {
+public enum Block: Equatable {
     public typealias Identifier = EntityIdentifier<Block, UUIDv4>
 }
 

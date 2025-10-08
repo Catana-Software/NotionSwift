@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct Database {
+public struct Database: Equatable {
     public typealias Identifier = EntityIdentifier<Database, UUIDv4>
     public typealias PropertyName = String
     public let id: Identifier
