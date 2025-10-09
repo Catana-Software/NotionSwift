@@ -61,7 +61,11 @@ public struct ReadBlock: CustomStringConvertible {
 
 // MARK: - Codable
 
+// TODO: Confirm purpose of discarding children property on decode
+// TODO: Confirm how this implemented the spec at https://developers.notion.com/reference/block
+// TODO: In particular in relation to how "type" is other than a string for a block
 extension ReadBlock: Decodable {
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Block.CodingKeys.self)
         id = try container.decode(Block.Identifier.self, forKey: .id)
@@ -72,8 +76,26 @@ extension ReadBlock: Decodable {
         lastEditedBy = try container.decode(PartialUser.self, forKey: .lastEditedBy)
         type = try BlockType(from: decoder)
         hasChildren = try container.decode(Bool.self, forKey: .hasChildren)
-        children = []
+        children = [] // Children are intentionally ignored here, no key
     }
+    
+}
+
+extension ReadBlock: Encodable {
+    
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: Block.CodingKeys.self)
+        try container.encode(self.id, forKey: .id)
+        try container.encode(self.createdTime, forKey: .createdTime)
+        try container.encode(self.lastEditedTime, forKey: .lastEditedTime)
+        try container.encode(self.archived, forKey: .archived)
+        try container.encode(self.type, forKey: .type)
+        try container.encode(self.hasChildren, forKey: .hasChildren)
+        try container.encode(self.createdBy, forKey: .createdBy)
+        try container.encode(self.lastEditedBy, forKey: .lastEditedBy)
+//        try container.encode(self.children, forKey: .children)  Ignore children?
+    }
+    
 }
 
 @available(iOS 13.0, *)

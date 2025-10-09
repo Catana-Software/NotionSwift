@@ -11,6 +11,8 @@ public enum Block: Equatable, Sendable {
 
 // MARK: - Codable
 
+// TODO: Identify reason for missing `parent` key
+// TODO: Identify reason for missing `in_trash` key
 extension Block {
     enum CodingKeys: String, CodingKey {
         case id
