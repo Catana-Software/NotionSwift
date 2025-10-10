@@ -3,7 +3,7 @@
 //
 import Foundation
 
-public enum BlockColor: Equatable, Sendable {
+public enum BlockColor: Equatable, RawRepresentable, Sendable {
     case `default`
     case gray
     case brown
@@ -25,7 +25,7 @@ public enum BlockColor: Equatable, Sendable {
     case redBackground
     case unknown(String)
     
-    init?(_ rawValue: String) {
+    public init?(rawValue: String) {
         let cases: [Self] = [.default,
                      .gray,
                      .brown,
@@ -104,7 +104,7 @@ extension BlockColor: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
-        guard let value = Self(rawValue) else {
+        guard let value = Self(rawValue: rawValue) else {
             self = .unknown(rawValue)
             return
         }
