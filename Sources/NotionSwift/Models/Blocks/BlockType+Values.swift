@@ -5,18 +5,18 @@
 import Foundation
 
 public extension BlockType {
-
+    
     struct ChildrenBlockValue: Equatable, Sendable {
         /// field used only for encoding for adding/appending new blocks
         public let children: [BlockType]?
-
+        
         public init(children: [BlockType]? = nil) {
             self.children = children
         }
-
+        
         public static let none = ChildrenBlockValue(children: nil)
     }
-
+    
     struct TextAndChildrenBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
@@ -27,7 +27,7 @@ public extension BlockType {
         
         /// field used only for encoding for adding/appending new blocks
         public let children: [BlockType]?
-
+        
         @available(*, deprecated, message: "Please use init(richText:children:) instead")
         public init(text: [RichText], children: [BlockType]? = nil) {
             self.richText = text
@@ -45,7 +45,7 @@ public extension BlockType {
             self.color = color
         }
     }
-
+    
     struct HeadingBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
@@ -68,7 +68,7 @@ public extension BlockType {
             self.isToggleable = isToggleable
         }
     }
-
+    
     struct ToDoBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
@@ -79,7 +79,7 @@ public extension BlockType {
         public let color: BlockColor
         // field used only for encoding for adding/appending new blocks
         public let children: [BlockType]?
-
+        
         @available(*, deprecated, message: "Please use init(richText:checked:color:children:) instead")
         public init(text: [RichText], checked: Bool? = nil, children: [BlockType]? = nil) {
             self.richText = text
@@ -95,23 +95,23 @@ public extension BlockType {
             self.children = children
         }
     }
-
+    
     struct ChildPageBlockValue: Equatable, Sendable {
         public let title: String
-
+        
         public init(title: String) {
             self.title = title
         }
     }
-
+    
     struct ChildDatabaseBlockValue: Equatable, Sendable {
         public let title: String
-
+        
         public init(title: String) {
             self.title = title
         }
     }
-
+    
     struct CodeBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
@@ -119,7 +119,7 @@ public extension BlockType {
             richText
         }
         public let language: String?
-
+        
         @available(*, deprecated, message: "Please use init(richText:language) instead")
         public init(text: [RichText], language: String? = nil) {
             self.richText = text
@@ -131,7 +131,7 @@ public extension BlockType {
             self.language = language
         }
     }
-
+    
     struct CalloutBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
@@ -158,7 +158,7 @@ public extension BlockType {
             self.color = color
         }
     }
-
+    
     struct QuoteBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         public let color: BlockColor
@@ -168,7 +168,7 @@ public extension BlockType {
         }
         // field used only for encoding for adding/appending new blocks
         public let children: [BlockType]?
-
+        
         @available(*, deprecated, message: "Please use init(richText:children:) instead")
         public init(text: [RichText], children: [BlockType]? = nil) {
             self.richText = text
@@ -182,45 +182,45 @@ public extension BlockType {
             self.color = color
         }
     }
-
+    
     struct EmbedBlockValue: Equatable, Sendable {
         public let url: String
         public let caption: [RichText]
-
+        
         public init(url: String, caption: [RichText]) {
             self.url = url
             self.caption = caption
         }
     }
-
+    
     struct BookmarkBlockValue: Equatable, Sendable {
         public let url: String
         public let caption: [RichText]
-
+        
         public init(url: String, caption: [RichText]) {
             self.url = url
             self.caption = caption
         }
     }
-
+    
     struct FileBlockValue: Equatable, Sendable {
         public let file: FileFile
         public let caption: [RichText]
-
+        
         public init(file: FileFile, caption: [RichText]) {
             self.file = file
             self.caption = caption
         }
     }
-
+    
     struct EquationBlockValue: Equatable, Sendable {
         public let expression: String
-
+        
         public init(expression: String) {
             self.expression = expression
         }
     }
-
+    
     struct TableOfContentsBlockValue: Equatable, Sendable {
         public let color: BlockColor
         
@@ -234,12 +234,12 @@ public extension BlockType {
         case database(Database.Identifier)
         case unknown
     }
-
+    
     enum SyncedBlockValue: Equatable, Sendable {
         case originalBlock
         case reference(Block.Identifier)
     }
-
+    
     struct TemplateBlockValue: Equatable, Sendable {
         public let richText: [RichText]
         @available(*, deprecated, renamed: "richText")
@@ -248,7 +248,7 @@ public extension BlockType {
         }
         /// field used only for encoding for adding/appending new blocks
         public let children: [BlockType]?
-
+        
         @available(*, deprecated, message: "Please use init(richText:children:) instead")
         public init(text: [RichText], children: [BlockType]? = nil) {
             self.richText = text
@@ -283,6 +283,7 @@ public extension BlockType {
             self.cells = cells
         }
     }
+    
 }
 
 // MARK: - Codable
