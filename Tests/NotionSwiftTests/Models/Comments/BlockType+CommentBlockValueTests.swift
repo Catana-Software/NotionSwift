@@ -78,7 +78,7 @@ struct BlockType_CommentBlockValueTests {
         """.data(using: .utf8)!
         
         let decoderForBlock = JSONDecoder()
-        decoderForBlock.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        decoderForBlock.dateDecodingStrategy = .formatted(.iso8601Full)
         
         let decoded = try decoderForBlock.decode(
             BlockType.CommentBlockValue.self,
