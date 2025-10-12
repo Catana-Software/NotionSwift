@@ -69,6 +69,13 @@ extension BlockType {
         /// Supports formatting, links, and mentions
         public let richText: [RichText]
         
+        /// Optional attachments of the comment
+        ///
+        /// This property as although it is not marked in the spec as being an optional property
+        /// the provided sample responses do not always include it. As such it has been inferred
+        /// that the correct behaviour is for an optional here
+        public let attachments: [Attachment]?
+        
         /// Creates a new `CommentBlockValue`.
         ///
         /// - Parameter id: Unique identifier of the comment.
@@ -78,6 +85,7 @@ extension BlockType {
         /// - Parameter lastEditedTime: The timestamp when the comment was last edited.
         /// - Parameter createdBy: The user who authored the comment.
         /// - Parameter richText: The rich text content of the comment.
+        /// - Parameter attachments: The optional attachments of the comment.
         public init(
             id: UUIDv4,
             parent: Parent,
@@ -85,7 +93,8 @@ extension BlockType {
             createdTime: Date,
             lastEditedTime: Date,
             createdBy: PartialUser,
-            richText: [RichText]
+            richText: [RichText],
+            attachments: [Attachment]?
         ) {
             
             self.id = id
@@ -95,6 +104,7 @@ extension BlockType {
             self.lastEditedTime = lastEditedTime
             self.createdBy = createdBy
             self.richText = richText
+            self.attachments = attachments
             
         }
         
@@ -113,6 +123,7 @@ extension BlockType.CommentBlockValue: Codable {
         case lastEditedTime = "last_edited_time"
         case createdBy = "created_by"
         case richText = "rich_text"
+        case attachments
     }
     
 }

@@ -29,6 +29,11 @@ extension BlockType.CommentBlockValue {
         /// The comment belongs to the current workspace (no additional identifier required).
         case workspace
         
+        /// The comment belongs to a block. A page may have a block parent if it is created
+        /// inline in a chunk of text, or is located beneath another block like a toggle or
+        /// bullet block
+        case block(UUIDv4)
+        
     }
     
 }
@@ -41,6 +46,7 @@ extension BlockType.CommentBlockValue.Parent: Codable {
         case dataSourceId = "data_source_id"
         case pageId = "page_id"
         case workspace
+        case blockID = "block_id"
     }
 
     public init(from decoder: Decoder) throws {
@@ -65,6 +71,10 @@ extension BlockType.CommentBlockValue.Parent: Codable {
         case CodingKeys.workspace.rawValue:
             self = .workspace
             
+        case CodingKeys.blockID.rawValue:
+            let id = try container.decode(UUIDv4.self, forKey: .blockID)
+            self = .block(id)
+            
         default:
             let context = DecodingError
                 .Context(
@@ -86,16 +96,23 @@ extension BlockType.CommentBlockValue.Parent: Codable {
         case .database(let id):
             try container.encode(CodingKeys.databaseId.rawValue, forKey: .type)
             try container.encode(id, forKey: .databaseId)
+            
         case .dataSource(let id, let databaseId):
             try container.encode(CodingKeys.dataSourceId.rawValue, forKey: .type)
             try container.encode(id, forKey: .dataSourceId)
             try container.encode(databaseId, forKey: .databaseId)
+            
         case .page(let id):
             try container.encode(CodingKeys.pageId.rawValue, forKey: .type)
             try container.encode(id, forKey: .pageId)
+            
         case .workspace:
             try container.encode(CodingKeys.workspace.rawValue, forKey: .type)
             try container.encode(true, forKey: .workspace)
+            
+        case .block(let id):
+            try container.encode(CodingKeys.blockID.rawValue, forKey: .type)
+            try container.encode(id, forKey: .blockID)
 
         }
         

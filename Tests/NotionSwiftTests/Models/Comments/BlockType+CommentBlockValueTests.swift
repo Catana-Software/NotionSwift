@@ -51,6 +51,18 @@ struct BlockType_CommentBlockValueTests {
         ]
         """
         
+        let attachments = """
+        [
+          {
+            "category": "image",
+            "file": {
+              "url": "https://s3.us-west-2.amazonaws.com/...",
+              "expiry_time": "2025-06-10T21:58:51.599Z"
+            }
+          }
+        ]
+        """
+        
         let json = """
         {
           "object": "comment",
@@ -61,18 +73,105 @@ struct BlockType_CommentBlockValueTests {
           "last_edited_time": "\(lastEditedTime)",
           "created_by": \(createdBy),
           "rich_text": \(richText),
-          "attachments": [
-            {
-              "category": "image",
-              "file": {
-                "url": "https://s3.us-west-2.amazonaws.com/...",
-                "expiry_time": "2025-06-10T21:58:51.599Z"
-              }
-            }
-          ],
+          "attachments": \(attachments),
           "display_name": {
             "type": "user",
             "resolved_name": "Avo Cado"
+          }
+        }
+        """.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(.iso8601Full)
+        
+        let decoded = try decoder.decode(
+            BlockType.CommentBlockValue.self,
+            from: json
+        )
+        
+        let expected = BlockType
+            .CommentBlockValue(
+                id: id,
+                parent: try! decoder
+                    .decode(
+                        BlockType.CommentBlockValue.Parent.self,
+                        from: parent.data(using: .utf8)!
+                    ),
+                discussionID: discussionID,
+                createdTime: DateFormatter.iso8601Full.date(from: createdTime)!,
+                lastEditedTime: DateFormatter.iso8601Full.date(from: lastEditedTime)!,
+                createdBy: try! decoder.decode(PartialUser.self, from: createdBy.data(using: .utf8)!),
+                richText: try! decoder.decode([RichText].self, from: richText.data(using: .utf8)!),
+                attachments: try! decoder
+                    .decode(
+                        [BlockType.CommentBlockValue.Attachment].self,
+                        from: attachments.data(using: .utf8)!
+                    )
+            )
+        
+        #expect(decoded == expected)
+        
+    }
+    
+    @Test func decodesSampleWithoutAttachments() throws {
+        
+        let id = "249911a-125e-803e-a164-001cf338b8ec"
+        
+        let parent = """
+          {
+            "type": "block_id",
+            "block_id": "247vw11a-125e-8053-8e73-d3b3ed4f5768"
+          }
+        """
+        
+        let discussionID = "1mv7b911a-125e-80df-8c9e-001c179f63ef"
+        
+        let createdTime = "2025-08-06T20:36:00.000Z"
+        
+        let lastEditedTime = "2025-08-06T20:36:00.000Z"
+        
+        let createdBy = """
+          {
+            "object": "user",
+            "id": "2092e755-4912-81f0-98dd-0002ad4ec952"
+          }
+        """
+        
+        let richText = """
+          [
+            {
+              "type": "text",
+              "text": {
+                "content": "hello there",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "hello there",
+              "href": null
+            }
+          ]
+        """
+        
+        let json = """
+        {
+          "object": "comment",
+          "id": "\(id)",
+          "parent": \(parent),
+          "discussion_id": "\(discussionID)",
+          "created_time": "\(createdTime)",
+          "last_edited_time": "\(lastEditedTime)",
+          "created_by": \(createdBy),
+          "rich_text": \(richText),
+          "display_name": {
+            "type": "integration",
+            "resolved_name": "int"
           }
         }
         """.data(using: .utf8)!
@@ -85,8 +184,6 @@ struct BlockType_CommentBlockValueTests {
             from: json
         )
         
-        // Expected
-        
         let decoder = JSONDecoder()
         
         let expected = BlockType
@@ -97,10 +194,9 @@ struct BlockType_CommentBlockValueTests {
                 createdTime: DateFormatter.iso8601Full.date(from: createdTime)!,
                 lastEditedTime: DateFormatter.iso8601Full.date(from: lastEditedTime)!,
                 createdBy: try! decoder.decode(PartialUser.self, from: createdBy.data(using: .utf8)!),
-                richText: try! decoder.decode([RichText].self, from: richText.data(using: .utf8)!)
+                richText: try! decoder.decode([RichText].self, from: richText.data(using: .utf8)!),
+                attachments: nil
             )
-        
-        // Assert
         
         #expect(decoded == expected)
         

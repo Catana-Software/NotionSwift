@@ -126,6 +126,36 @@ struct BlockType_CommentBlockValue_ParentTests {
         
     }
     
+    @Test func decodesBlockIDSampleResponse() throws {
+        
+        let blockID = "7d50a184-5bbe-4d90-8f29-6bec57ed817b"
+        
+        let json = """
+        {
+          "type": "block_id",
+          "block_id": "\(blockID)"
+        }
+        """
+        
+        let data = Data(json.utf8)
+        let value = try JSONDecoder()
+            .decode(BlockType.CommentBlockValue.Parent.self, from: data)
+        
+        switch value {
+        case .block(let id):
+            #expect(id == blockID)
+        default:
+            #expect(Bool(false))
+        }
+        
+        let encoded = try JSONEncoder().encode(value)
+        let decoded = try JSONDecoder()
+            .decode(BlockType.CommentBlockValue.Parent.self, from: encoded)
+        
+        #expect(decoded == value)
+        
+    }
+    
     @Test func decodingUnknownTypeThrowsTypeMismatch() throws {
         
         let unknownType = "unknown_type"
