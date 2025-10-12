@@ -21,12 +21,11 @@ extension BlockType {
     ///   and UI display.
     /// - createdBy: A lightweight representation of the user who authored the comment.
     /// - richText: The rich text content supporting formatting, links, and mentions.
+    /// - attachments: Optional attachments that can be added to a comment.
+    /// - displayName: A custom display name for the author of the comment.
     ///
     /// Codable behavior:
-    /// - Uses snake_case key mapping to align with Notion API response fields:
-    ///   - discussion_id, created_time, last_edited_time, created_by, rich_text.
-    /// - The `parent` property encodes/decodes a tagged representation with a `type` field
-    ///   and associated payload fields (e.g., database_id, data_source_id, page_id, workspace).
+    /// - Uses snake_case key mapping to align with Notion API response fields.
     ///
     /// Thread-safety and value semantics:
     /// - Conforms to `Sendable` and `Equatable`, making it suitable for use in Swift Concurrency
@@ -71,10 +70,13 @@ extension BlockType {
         
         /// Optional attachments of the comment
         ///
-        /// This property as although it is not marked in the spec as being an optional property
-        /// the provided sample responses do not always include it. As such it has been inferred
+        /// This property is optional, although it is not marked in the spec as being so. The
+        /// provided sample responses do not always include it. As such it has been inferred
         /// that the correct behaviour is for an optional here
         public let attachments: [Attachment]?
+        
+        /// Custom display name on comment
+        public let displayName: DisplayName
         
         /// Creates a new `CommentBlockValue`.
         ///
@@ -86,6 +88,7 @@ extension BlockType {
         /// - Parameter createdBy: The user who authored the comment.
         /// - Parameter richText: The rich text content of the comment.
         /// - Parameter attachments: The optional attachments of the comment.
+        /// - Parameter displayName: The custome display name of the comment.
         public init(
             id: UUIDv4,
             parent: Parent,
@@ -94,7 +97,8 @@ extension BlockType {
             lastEditedTime: Date,
             createdBy: PartialUser,
             richText: [RichText],
-            attachments: [Attachment]?
+            attachments: [Attachment]?,
+            displayName: DisplayName
         ) {
             
             self.id = id
@@ -105,6 +109,7 @@ extension BlockType {
             self.createdBy = createdBy
             self.richText = richText
             self.attachments = attachments
+            self.displayName = displayName
             
         }
         
@@ -124,6 +129,7 @@ extension BlockType.CommentBlockValue: Codable {
         case createdBy = "created_by"
         case richText = "rich_text"
         case attachments
+        case displayName = "display_name"
     }
     
 }

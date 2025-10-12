@@ -63,6 +63,13 @@ struct BlockType_CommentBlockValueTests {
         ]
         """
         
+        let displayName = """
+        {
+          "type": "user",
+          "resolved_name": "Avo Cado"
+        }
+        """
+        
         let json = """
         {
           "object": "comment",
@@ -74,10 +81,7 @@ struct BlockType_CommentBlockValueTests {
           "created_by": \(createdBy),
           "rich_text": \(richText),
           "attachments": \(attachments),
-          "display_name": {
-            "type": "user",
-            "resolved_name": "Avo Cado"
-          }
+          "display_name": \(displayName)
         }
         """.data(using: .utf8)!
         
@@ -106,6 +110,11 @@ struct BlockType_CommentBlockValueTests {
                     .decode(
                         [BlockType.CommentBlockValue.Attachment].self,
                         from: attachments.data(using: .utf8)!
+                    ),
+                displayName: try! decoder
+                    .decode(
+                        BlockType.CommentBlockValue.DisplayName.self,
+                        from: displayName.data(using: .utf8)!
                     )
             )
         
@@ -113,6 +122,8 @@ struct BlockType_CommentBlockValueTests {
         
     }
     
+    /// Sample from comments API response docs at
+    /// https://developers.notion.com/reference/retrieve-comment
     @Test func decodesSampleWithoutAttachments() throws {
         
         let id = "249911a-125e-803e-a164-001cf338b8ec"
@@ -159,6 +170,13 @@ struct BlockType_CommentBlockValueTests {
           ]
         """
         
+        let displayName = """
+        {
+          "type": "integration",
+          "resolved_name": "int"
+        }
+        """
+        
         let json = """
         {
           "object": "comment",
@@ -169,10 +187,7 @@ struct BlockType_CommentBlockValueTests {
           "last_edited_time": "\(lastEditedTime)",
           "created_by": \(createdBy),
           "rich_text": \(richText),
-          "display_name": {
-            "type": "integration",
-            "resolved_name": "int"
-          }
+          "display_name": \(displayName)
         }
         """.data(using: .utf8)!
         
@@ -195,7 +210,12 @@ struct BlockType_CommentBlockValueTests {
                 lastEditedTime: DateFormatter.iso8601Full.date(from: lastEditedTime)!,
                 createdBy: try! decoder.decode(PartialUser.self, from: createdBy.data(using: .utf8)!),
                 richText: try! decoder.decode([RichText].self, from: richText.data(using: .utf8)!),
-                attachments: nil
+                attachments: nil,
+                displayName: try! decoder
+                    .decode(
+                        BlockType.CommentBlockValue.DisplayName.self,
+                        from: displayName.data(using: .utf8)!
+                    )
             )
         
         #expect(decoded == expected)
