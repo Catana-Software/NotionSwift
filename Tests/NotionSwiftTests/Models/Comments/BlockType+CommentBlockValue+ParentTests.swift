@@ -4,7 +4,7 @@ import Testing
 
 struct BlockType_CommentBlockValue_ParentTests {
     
-    /// Sample JSON from hhttps://developers.notion.com/reference/parent-object
+    /// Sample JSON from https://developers.notion.com/reference/parent-object
     @Test func decodesDatabaseSampleResponse() throws {
         
         let databaseID = "d9824bdc-8445-4327-be8b-5b47500af6ce"
