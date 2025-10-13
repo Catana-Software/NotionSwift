@@ -6,10 +6,13 @@ final class MockNetworkClient: NetworkClient {
     
     private var anyResult: Any
     
+    private var expectedURL: URL?
+    
     init(
         success: [Comment],
         nextCursor: String? = nil,
-        hasMore: Bool = false
+        hasMore: Bool = false,
+        expectedURL: URL? = nil
     ) {
         
         self.anyResult = Result<ListResponse<Comment>, NotionClientError>
@@ -21,12 +24,19 @@ final class MockNetworkClient: NetworkClient {
                 )
             )
         
+        self.expectedURL = expectedURL
+        
     }
     
-    init(success: Comment) {
+    init(
+        success: Comment,
+        expectedURL: URL? = nil
+    ) {
         
         self.anyResult = Result<Comment, NotionClientError>
             .success(success)
+        
+        self.expectedURL = expectedURL
         
     }
     
@@ -43,6 +53,22 @@ final class MockNetworkClient: NetworkClient {
         headers: Network.HTTPHeaders,
         completed: @escaping (Result<T, NotionClientError>) -> Void
     ) {
+        
+        if let expectedURL = expectedURL {
+            
+            if url.absoluteString != expectedURL.absoluteString {
+                
+                let error = NSError(
+                    domain: "URL mismatch expected: \(expectedURL), got: \(url)",
+                    code: 1
+                )
+             
+                completed(.failure(.genericError(error)))
+                
+                return
+            }
+            
+        }
         
         guard
             let result = anyResult as? Result<T, NotionClientError>
