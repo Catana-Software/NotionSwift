@@ -36,7 +36,6 @@ public enum BlockType: Equatable, Sendable {
     case template(TemplateBlockValue)
     case table(TableBlockValue)
     case tableRow(TableRowBlockValue)
-    case comment(CommentBlockValue)
     case unsupported(type: String)
 }
 
@@ -76,7 +75,6 @@ extension BlockType: Codable {
         case template
         case table
         case tableRow = "table_row"
-        case comment
         case unsupported
     }
 
@@ -146,8 +144,6 @@ extension BlockType: Codable {
             return .table
         case .tableRow:
             return .tableRow
-        case .comment:
-            return .comment
         }
     }
 
@@ -253,9 +249,6 @@ extension BlockType: Codable {
         case .tableRow:
             let value = try container.decode(TableRowBlockValue.self, forKey: key)
             self = .tableRow(value)
-        case .comment:
-            let value = try container.decode(CommentBlockValue.self, forKey: key)
-            self = .comment(value)
         case .type, .unsupported:
             self = .unsupported(type: type)
         }
@@ -324,8 +317,6 @@ extension BlockType: Codable {
         case .table(let value):
             try container.encode(value, forKey: key)
         case .tableRow(let value):
-            try container.encode(value, forKey: key)
-        case .comment(let value):
             try container.encode(value, forKey: key)
         case .divider, .breadcrumb:
             try container.encode([String: String](), forKey: key)

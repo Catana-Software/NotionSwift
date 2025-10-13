@@ -7,6 +7,7 @@ import Foundation
 import FoundationNetworking
 #endif
 
+// TODO: Replace fatalError with throwing initializer
 public class URLBuilder {
     let base: URL
 
@@ -16,15 +17,34 @@ public class URLBuilder {
 
     public func url<T>(
         path: String,
-        identifier: EntityIdentifier<T, String>,
+        identifier: EntityIdentifier<T, UUIDv4>,
         params: [String: String] = [:]
     ) -> URL {
-        let newPath = path.replacingOccurrences(of: "{identifier}", with: identifier.rawValue)
+
+        return url(
+            path: path,
+            identifier: identifier.rawValue,
+            params: params
+        )
+        
+    }
+    
+    public func url(
+        path: String,
+        identifier: UUIDv4,
+        params: [String: String] = [:]
+    ) -> URL {
+        
+        let newPath = path.replacingOccurrences(of: "{identifier}", with: identifier)
         guard let url = URL(string: newPath, relativeTo: base) else {
             fatalError("Invalid path, unable to create a URL: \(path)")
         }
 
-        return buildURL(url: url, params: params)
+        return buildURL(
+            url: url,
+            params: params
+        )
+        
     }
 
     public func url(

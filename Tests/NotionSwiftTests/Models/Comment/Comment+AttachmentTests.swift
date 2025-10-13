@@ -2,7 +2,7 @@ import Foundation
 import NotionSwift
 import Testing
 
-struct BlockType_CommentBlockValue_AttachmentTests {
+struct Comment_AttachmentTests {
     
     /// This sample is taken from the docs at
     /// https://developers.notion.com/reference/comment-attachment
@@ -33,7 +33,7 @@ struct BlockType_CommentBlockValue_AttachmentTests {
         decoder.dateDecodingStrategy = .formatted(.iso8601Full)
         
         let value = try decoder
-            .decode(BlockType.CommentBlockValue.Attachment.self, from: data)
+            .decode(Comment.Attachment.self, from: data)
         
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .formatted(.iso8601Full)
@@ -42,7 +42,7 @@ struct BlockType_CommentBlockValue_AttachmentTests {
             .encode(value)
         
         let decoded = try decoder
-            .decode(BlockType.CommentBlockValue.Attachment.self, from: encoded)
+            .decode(Comment.Attachment.self, from: encoded)
         
         #expect(decoded == value)
         

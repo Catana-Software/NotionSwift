@@ -2,13 +2,13 @@ import Foundation
 import NotionSwift
 import Testing
 
-struct BlockType_CommentBlockValue_DisplayNameTests {
+struct Comment_DisplayNameTests {
     
     /// Sample JSON from https://developers.notion.com/reference/retrieve-comment
     /// relating to the response from comment API's
     @Test func decodesSampleResponse() throws {
         
-        let name = "name"
+        let name = "n!me"
         let json = """
         {
             "type": "integration",
@@ -18,7 +18,7 @@ struct BlockType_CommentBlockValue_DisplayNameTests {
         
         let data = Data(json.utf8)
         let value = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.DisplayName.self, from: data)
+            .decode(Comment.DisplayName.self, from: data)
         
         switch value {
         case .integration(resolvedName: let resolvedName):
@@ -29,7 +29,7 @@ struct BlockType_CommentBlockValue_DisplayNameTests {
         
         let encoded = try JSONEncoder().encode(value)
         let decoded = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.DisplayName.self, from: encoded)
+            .decode(Comment.DisplayName.self, from: encoded)
         
         #expect(decoded == value)
         
@@ -47,7 +47,7 @@ struct BlockType_CommentBlockValue_DisplayNameTests {
         
         let data = Data(json.utf8)
         let value = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.DisplayName.self, from: data)
+            .decode(Comment.DisplayName.self, from: data)
         
         switch value {
         case .custom(resolvedName: let resolvedName):
@@ -59,7 +59,7 @@ struct BlockType_CommentBlockValue_DisplayNameTests {
         let encoded = try JSONEncoder().encode(value)
         let decoded = try JSONDecoder()
         
-            .decode(BlockType.CommentBlockValue.DisplayName.self, from: encoded)
+            .decode(Comment.DisplayName.self, from: encoded)
         
         #expect(decoded == value)
         
@@ -77,7 +77,7 @@ struct BlockType_CommentBlockValue_DisplayNameTests {
         
         let data = Data(json.utf8)
         let value = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.DisplayName.self, from: data)
+            .decode(Comment.DisplayName.self, from: data)
         
         switch value {
         case .user(resolvedName: let resolvedName):
@@ -88,7 +88,7 @@ struct BlockType_CommentBlockValue_DisplayNameTests {
         
         let encoded = try JSONEncoder().encode(value)
         let decoded = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.DisplayName.self, from: encoded)
+            .decode(Comment.DisplayName.self, from: encoded)
         
         #expect(decoded == value)
         
