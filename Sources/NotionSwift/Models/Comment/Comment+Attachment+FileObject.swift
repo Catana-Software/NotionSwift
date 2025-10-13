@@ -11,7 +11,7 @@ import Foundation
 /// URL and an expiration timestamp. If future API responses introduce
 /// additional shapes, this type may need to be revisited to better align
 /// with the spec
-extension BlockType.CommentBlockValue.Attachment {
+extension Comment.Attachment {
     
     /// A time limited link to the attached file
     public struct FileObject {
@@ -30,7 +30,7 @@ extension BlockType.CommentBlockValue.Attachment {
     
 }
 
-extension BlockType.CommentBlockValue.Attachment.FileObject: Codable {
+extension Comment.Attachment.FileObject: Codable {
     
     private enum CodingKeys: String, CodingKey {
         case url
@@ -39,5 +39,5 @@ extension BlockType.CommentBlockValue.Attachment.FileObject: Codable {
     
 }
 
-extension BlockType.CommentBlockValue.Attachment.FileObject: Equatable {}
-extension BlockType.CommentBlockValue.Attachment.FileObject: Sendable {}
+extension Comment.Attachment.FileObject: Equatable {}
+extension Comment.Attachment.FileObject: Sendable {}

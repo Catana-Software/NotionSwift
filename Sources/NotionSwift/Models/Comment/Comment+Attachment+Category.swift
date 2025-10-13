@@ -1,6 +1,6 @@
 import Foundation
 
-extension BlockType.CommentBlockValue.Attachment {
+extension Comment.Attachment {
     
     /// Categories of attachments supported by Notion comments
     ///
@@ -17,6 +17,6 @@ extension BlockType.CommentBlockValue.Attachment {
     
 }
 
-extension BlockType.CommentBlockValue.Attachment.Category: Codable {}
-extension BlockType.CommentBlockValue.Attachment.Category: Equatable {}
-extension BlockType.CommentBlockValue.Attachment.Category: Sendable {}
+extension Comment.Attachment.Category: Codable {}
+extension Comment.Attachment.Category: Equatable {}
+extension Comment.Attachment.Category: Sendable {}

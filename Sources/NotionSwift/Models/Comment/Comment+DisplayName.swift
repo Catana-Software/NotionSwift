@@ -1,8 +1,8 @@
 import Foundation
 
-extension BlockType.CommentBlockValue {
+extension Comment {
     
-    /// A discriminator that identifies the display name of a comment.
+    /// A discriminator that identifies the display name of a comment
     ///
     /// The Comment Display Name object represents the author name that shows up for a comment.
     /// This overrides the default author name when specified
@@ -21,7 +21,7 @@ extension BlockType.CommentBlockValue {
     
 }
 
-extension BlockType.CommentBlockValue.DisplayName: Codable {
+extension Comment.DisplayName: Codable {
     
     private enum TypeKey: String, Codable {
         case integration
@@ -79,5 +79,5 @@ extension BlockType.CommentBlockValue.DisplayName: Codable {
     
 }
 
-extension BlockType.CommentBlockValue.DisplayName: Equatable {}
-extension BlockType.CommentBlockValue.DisplayName: Sendable {}
+extension Comment.DisplayName: Equatable {}
+extension Comment.DisplayName: Sendable {}

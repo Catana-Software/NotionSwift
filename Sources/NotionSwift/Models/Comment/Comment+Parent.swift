@@ -1,12 +1,12 @@
 import Foundation
 
-extension BlockType.CommentBlockValue {
+extension Comment {
     
-    /// A discriminator that identifies the parent context of a comment.
+    /// A discriminator that identifies the parent context of a comment
     ///
     /// This value indicates where a comment belongs in the hierarchy of content.
     /// It mirrors the wire format used when encoding/decoding from the API by
-    /// emitting a `type` key alongside the associated identifiers (when present).
+    /// emitting a `type` key alongside the associated identifiers (when present)
     public enum Parent {
         
         /// The comment belongs to a database.
@@ -38,7 +38,7 @@ extension BlockType.CommentBlockValue {
     
 }
 
-extension BlockType.CommentBlockValue.Parent: Codable {
+extension Comment.Parent: Codable {
     
     private enum CodingKeys: String, CodingKey {
         case type
@@ -82,7 +82,7 @@ extension BlockType.CommentBlockValue.Parent: Codable {
                     debugDescription: "Unknown parent type: \(type)"
                 )
             throw DecodingError
-                .typeMismatch(BlockType.CommentBlockValue.Parent.self, context)
+                .typeMismatch(Comment.Parent.self, context)
             
         }
         
@@ -120,5 +120,5 @@ extension BlockType.CommentBlockValue.Parent: Codable {
     
 }
 
-extension BlockType.CommentBlockValue.Parent: Equatable {}
-extension BlockType.CommentBlockValue.Parent: Sendable {}
+extension Comment.Parent: Equatable {}
+extension Comment.Parent: Sendable {}

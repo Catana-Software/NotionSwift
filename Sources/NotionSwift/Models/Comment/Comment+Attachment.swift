@@ -1,8 +1,8 @@
 import Foundation
 
-extension BlockType.CommentBlockValue {
+extension Comment {
     
-    /// Attachment value associated with a comment block
+    /// Attachment value associated with a comment
     ///
     /// Represents a piece of content attached to a comment, such as images,
     /// audio, video, PDFs or productivity files. Each attachment includes a
@@ -19,6 +19,6 @@ extension BlockType.CommentBlockValue {
     
 }
 
-extension BlockType.CommentBlockValue.Attachment: Codable {}
-extension BlockType.CommentBlockValue.Attachment: Equatable {}
-extension BlockType.CommentBlockValue.Attachment: Sendable {}
+extension Comment.Attachment: Codable {}
+extension Comment.Attachment: Equatable {}
+extension Comment.Attachment: Sendable {}

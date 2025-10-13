@@ -2,7 +2,7 @@ import Foundation
 import NotionSwift
 import Testing
 
-struct BlockType_CommentBlockValue_ParentTests {
+struct Comment_ParentTests {
     
     /// Sample JSON from https://developers.notion.com/reference/parent-object
     @Test func decodesDatabaseSampleResponse() throws {
@@ -18,7 +18,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let data = Data(json.utf8)
         let value = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: data)
+            .decode(Comment.Parent.self, from: data)
         
         switch value {
         case .database(let id):
@@ -29,7 +29,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let encoded = try JSONEncoder().encode(value)
         let decoded = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: encoded)
+            .decode(Comment.Parent.self, from: encoded)
         
         #expect(decoded == value)
         
@@ -50,7 +50,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let data = Data(json.utf8)
         let value = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: data)
+            .decode(Comment.Parent.self, from: data)
         
         switch value {
         case .dataSource(let ds, let db):
@@ -62,7 +62,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let encoded = try JSONEncoder().encode(value)
         let decoded = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: encoded)
+            .decode(Comment.Parent.self, from: encoded)
         
         #expect(decoded == value)
         
@@ -81,7 +81,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let data = Data(json.utf8)
         let value = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: data)
+            .decode(Comment.Parent.self, from: data)
         
         switch value {
         case .page(let id):
@@ -92,7 +92,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let encoded = try JSONEncoder().encode(value)
         let decoded = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: encoded)
+            .decode(Comment.Parent.self, from: encoded)
         
         #expect(decoded == value)
         
@@ -109,7 +109,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let data = Data(json.utf8)
         let value = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: data)
+            .decode(Comment.Parent.self, from: data)
         
         switch value {
         case .workspace:
@@ -120,7 +120,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let encoded = try JSONEncoder().encode(value)
         let decoded = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: encoded)
+            .decode(Comment.Parent.self, from: encoded)
         
         #expect(decoded == value)
         
@@ -139,7 +139,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let data = Data(json.utf8)
         let value = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: data)
+            .decode(Comment.Parent.self, from: data)
         
         switch value {
         case .block(let id):
@@ -150,7 +150,7 @@ struct BlockType_CommentBlockValue_ParentTests {
         
         let encoded = try JSONEncoder().encode(value)
         let decoded = try JSONDecoder()
-            .decode(BlockType.CommentBlockValue.Parent.self, from: encoded)
+            .decode(Comment.Parent.self, from: encoded)
         
         #expect(decoded == value)
         
@@ -170,13 +170,13 @@ struct BlockType_CommentBlockValue_ParentTests {
         let data = Data(json.utf8)
         
         #expect(throws: Error.self) {
-            _ = try JSONDecoder().decode(BlockType.CommentBlockValue.Parent.self, from: data)
+            _ = try JSONDecoder().decode(Comment.Parent.self, from: data)
         }
         
         var thrown: Error?
         do {
             
-            _ = try JSONDecoder().decode(BlockType.CommentBlockValue.Parent.self, from: data)
+            _ = try JSONDecoder().decode(Comment.Parent.self, from: data)
             
         } catch {
             

@@ -1,8 +1,7 @@
 import Foundation
 
-extension BlockType {
     
-    /// A type describing a comment block
+    /// A type describing a comment
     ///
     /// This model represents a single comment within a discussion thread, including
     /// identifiers, timestamps, author information, and the rich text content of the
@@ -30,7 +29,7 @@ extension BlockType {
     /// Thread-safety and value semantics:
     /// - Conforms to `Sendable` and `Equatable`, making it suitable for use in Swift Concurrency
     ///   contexts and for reliable equality checks in testing or state management.
-    public struct CommentBlockValue {
+    public struct Comment {
         
         /// Always "comment"
         public let object: String = "comment"
@@ -115,9 +114,8 @@ extension BlockType {
         
     }
     
-}
 
-extension BlockType.CommentBlockValue: Codable {
+extension Comment: Codable {
     
     private enum CodingKeys: String, CodingKey {
         case object
@@ -134,6 +132,6 @@ extension BlockType.CommentBlockValue: Codable {
     
 }
 
-extension BlockType.CommentBlockValue: Equatable {}
-extension BlockType.CommentBlockValue: Sendable {}
+extension Comment: Equatable {}
+extension Comment: Sendable {}
 
