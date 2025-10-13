@@ -1,4 +1,4 @@
-import NotionSwift
+@testable import NotionSwift
 import Testing
 import Foundation
 
@@ -18,7 +18,7 @@ struct NotionClient_CommentsTests {
         )
         
         client.comment(id: UUID().uuidString) { result in
-
+            
             switch result {
             case .success:
                 #expect(Bool(false))
@@ -53,48 +53,62 @@ struct NotionClient_CommentsTests {
             displayName: .custom(resolvedName: "Bot")
         )
         
+        let requestID = UUID().uuidString
+        
+        let expectedURL = URLBuilder()
+            .url(
+                path: "/v1/comments/{identifier}",
+                identifier: requestID
+            )
+        
         let client = NotionClient(
             accessKeyProvider: testProvider,
-            networkClient: MockNetworkClient(success: comment)
+            networkClient: MockNetworkClient(
+                success: comment,
+                expectedURL: expectedURL
+            )
         )
         
-        client.comment(id: UUID().uuidString) { result in
-
+        client.comment(id: requestID) { result in
+            
             switch result {
             case .success(let success):
                 #expect(success == comment)
                 
-            case .failure:
-                #expect(Bool(false))
+            case .failure(let error):
+                #expect(Bool(false), "\(error)")
                 
             }
             
         }
         
     }
-
+    
     @Test func commentsFailure() {
         
         let client = NotionClient(
             accessKeyProvider: testProvider,
             networkClient: MockNetworkClient(failure: .unsupportedResponseError)
-            )
+        )
         
         let params = BaseQueryParams(
             startCursor: UUID().uuidString,
             pageSize: 20
         )
-
-        client.comments(params: params) { result in
+        
+        client.comments(id: UUID().uuidString, params: params) { result in
+            
             switch result {
             case .success:
                 #expect(Bool(false), "Expected failure but received success")
+                
             case .failure:
                 #expect(true)
             }
+            
         }
     }
-
+    
     @Test func commentsSuccess() {
         
         let partialUser = PartialUser(id: .init(UUID().uuidString))
@@ -102,7 +116,7 @@ struct NotionClient_CommentsTests {
             string: "This is the text",
             annotations: .underline
         )
-
+        
         let comments: [Comm] = [
             Comm(
                 id: UUID().uuidString,
@@ -127,27 +141,37 @@ struct NotionClient_CommentsTests {
                 displayName: .custom(resolvedName: "Bot 2")
             )
         ]
-
+        
+        let requestID = UUID().uuidString
+        
+        var combinedParams = BaseQueryParams().asParams
+        combinedParams["block_id"] = requestID
+        
+        let expectedURL = URLBuilder()
+            .url(
+                path: "/v1/comments",
+                params: combinedParams
+            )
+        
         let client = NotionClient(
             accessKeyProvider: testProvider,
-            networkClient: MockNetworkClient(success: comments)
+            networkClient: MockNetworkClient(
+                success: comments,
+                expectedURL: expectedURL
+            )
         )
-
-        let params = BaseQueryParams(
-            startCursor: UUID().uuidString,
-            pageSize: 20
-        )
-
-        client.comments(params: params) { result in
+        
+        client.comments(id: requestID, params: BaseQueryParams()) { result in
             
             switch result {
             case .success(let success):
                 #expect(success.results == comments)
                 
-            case .failure:
-                #expect(Bool(false))
+            case .failure(let error):
+                #expect(Bool(false), "\(error)")
                 
             }
+            
         }
         
     }

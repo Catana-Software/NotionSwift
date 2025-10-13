@@ -68,4 +68,24 @@ struct URLBuilderTests {
         
     }
     
+    @Test func docsCommentsURLExample() {
+        
+        let uuid = UUID().uuidString
+        
+        var combinedParams = BaseQueryParams().asParams
+        combinedParams["block_id"] = uuid
+        
+        let result = URLBuilder()
+            .url(
+                path: "/v1/comments",
+                identifier: uuid,
+                params: combinedParams
+            )
+        
+        let expected = "https://api.notion.com/v1/comments?block_id=\(uuid)"
+        
+        #expect(result.absoluteString == expected)
+        
+    }
+    
 }

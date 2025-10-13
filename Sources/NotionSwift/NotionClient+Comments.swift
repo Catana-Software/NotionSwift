@@ -9,8 +9,8 @@ extension NotionClient {
     /// See Notion API: https://developers.notion.com/reference/retrieve-comment
     ///
     /// - Parameter id: An identifier to retrieve.
-    /// - Parameter completed: A closure called with the result containing
-    ///   `ListResponse<Comment>` on success, or a `NotionClientError` on failure.
+    /// - Parameter completed: A closure called with the result containing `Comment` on success,
+    ///   or a `NotionClientError` on failure.
     public func comment(
         id: UUIDv4,
         completed: @Sendable @escaping (Result<Comment, NotionClientError>) -> Void
@@ -27,23 +27,29 @@ extension NotionClient {
         
     }
     
-    /// Retrieves a list of comments
+    /// Retrieves a list of comments for an identifier relating to a block
     ///
     /// See Notion API: https://developers.notion.com/reference/list-comments
     ///
+    /// - Parameter id: A `block_id` parameter to query list of unresolved comments.
     /// - Parameter params: The start cursor and page size params.
     /// - Parameter completed: A closure called with the result containing a
     ///   `ListResponse` of `Comment` on success, or a `NotionClientError` on failure.
     public func comments(
+        id: UUIDv4,
         params: BaseQueryParams,
         completed: @Sendable @escaping (Result<ListResponse<Comment>, NotionClientError>) -> Void
     ) {
         
+        var combinedParams = params.asParams
+        combinedParams["block_id"] = id
+        
         networkClient.get(
-            urlBuilder.url(
-                path: "/v1/comments",
-                params: params.asParams
-            ),
+            urlBuilder
+                .url(
+                    path: "/v1/comments",
+                    params: combinedParams
+                ),
             headers: headers(),
             completed: completed
         )
@@ -51,4 +57,3 @@ extension NotionClient {
     }
     
 }
-
