@@ -40,23 +40,65 @@ public struct ReadBlock: CustomStringConvertible {
         self.children = children
     }
 
+    /// A human readable summary of the block, primarily intended for debugging or logging
+    ///
+    /// The string includes, in order, the block identifier, its type, the creation
+    /// and last-edited timestamps, a Boolean indicating whether the block has (or is
+    /// expected to have) children, and, if any children are already loaded into this
+    /// instance, the count of those children.
+    ///
+    /// Notes:
+    /// - The `children` array in `ReadBlock` is not populated by default from the API;
+    ///   it is typically empty unless you explicitly load and attach children using
+    ///   `updateChildren(_)`.
+    /// - When children are present, the description appends `Children:<count>`.
     public var description: String {
-        "ReadBlock:\(id),\(type),\(createdTime),\(lastEditedTime),\(hasChildren)"
+        
+        let values = [
+            id.rawValue,
+            "\(type)",
+            createdTime.description,
+            lastEditedTime.description,
+            "\(hasChildren)",
+            children.isEmpty ? nil : "Children:\(children.count)"
+        ]
+            .compactMap { $0 }
+            .joined(separator: ",")
+        
+        return "ReadBlock:\(values)"
+        
     }
 
+    /// Returns a new `ReadBlock` with the same metadata as the receiver but with the provided
+    /// children
+    ///
+    /// - Note: Notion's API does not return block children inline; they must be fetched separately
+    ///   (e.g., via a client method like `blockChildren`) and then applied using this method.
+    ///
+    /// - Important: This method sets `hasChildren` to `true` if `children` is none empty
+    ///   and `false` otherwise.
+    ///
+    /// - Parameter children: The list of child `ReadBlock` instances to associate with this block.
+    ///
+    /// - Returns: A new `ReadBlock` instance whose `children` are set to the provided array and
+    ///   whose other properties (`id`, `archived`, `type`, `createdTime`, `lastEditedTime`,
+    ///   `createdBy`, and `lastEditedBy`) are copied from the original.
     public func updateChildren(_ children: [ReadBlock]) -> Self {
+        
         return .init(
             id: self.id,
             archived: self.archived,
             type: self.type,
             createdTime: self.createdTime,
             lastEditedTime: self.lastEditedTime,
-            hasChildren: self.hasChildren,
+            hasChildren: !children.isEmpty,
             createdBy: self.createdBy,
             lastEditedBy: self.lastEditedBy,
             children: children
         )
+        
     }
+    
 }
 
 // MARK: - Codable
@@ -102,3 +144,4 @@ extension ReadBlock: Encodable {
 extension ReadBlock: Identifiable {}
 extension ReadBlock: Equatable {}
 extension ReadBlock: Sendable {}
+
