@@ -8,8 +8,8 @@ struct User_PersonTests {
         
         let person = User.Person(email: nil)
         
-        let encoded = try JSONEncoder().encode(person)
-        let decoded = try JSONDecoder().decode(User.Person.self, from: encoded)
+        let encoded = try encodeToJson(person)
+        let decoded: User.Person = try decodeFromJson(encoded)
         
         #expect(person == decoded)
         
@@ -19,8 +19,8 @@ struct User_PersonTests {
         
         let person = User.Person(email: "example@example.com")
         
-        let encoded = try JSONEncoder().encode(person)
-        let decoded = try JSONDecoder().decode(User.Person.self, from: encoded)
+        let encoded = try encodeToJson(person)
+        let decoded: User.Person = try decodeFromJson(encoded)
         
         #expect(person == decoded)
         

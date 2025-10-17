@@ -46,13 +46,8 @@ struct RichText_AnnotationsTests {
                     color: randomColor()
                 )
             
-            let encoder = JSONEncoder()
-            let encoded = try encoder.encode(base)
-            let decoded = try JSONDecoder()
-                .decode(
-                    RichText.Annotations.self,
-                    from: encoded
-                )
+            let encoded = try encodeToJson(base)
+            let decoded: RichText.Annotations = try decodeFromJson(encoded)
             
             #expect(decoded == base)
             

@@ -4,6 +4,8 @@ import Testing
 
 struct CommentTests {
     
+    private typealias Comm = NotionSwift.Comment
+    
     /// Sample JSON from https://developers.notion.com/reference/comment-object
     @Test func decodesSampleResponse() throws {
         
@@ -83,38 +85,20 @@ struct CommentTests {
           "attachments": \(attachments),
           "display_name": \(displayName)
         }
-        """.data(using: .utf8)!
+        """
         
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(.iso8601Full)
+        let decoded: Comm = try decodeFromJson(json)
         
-        let decoded = try decoder.decode(
-            NotionSwift.Comment.self,
-            from: json
-        )
-        
-        let expected = Comment(
+        let expected = Comm(
             id: id,
-            parent: try! decoder
-                .decode(
-                    Comment.Parent.self,
-                    from: parent.data(using: .utf8)!
-                ),
+            parent: try! decodeFromJson(parent),
             discussionID: discussionID,
             createdTime: DateFormatter.iso8601Full.date(from: createdTime)!,
             lastEditedTime: DateFormatter.iso8601Full.date(from: lastEditedTime)!,
-            createdBy: try! decoder.decode(PartialUser.self, from: createdBy.data(using: .utf8)!),
-            richText: try! decoder.decode([RichText].self, from: richText.data(using: .utf8)!),
-            attachments: try! decoder
-                .decode(
-                    [NotionSwift.Comment.Attachment].self,
-                    from: attachments.data(using: .utf8)!
-                ),
-            displayName: try! decoder
-                .decode(
-                    NotionSwift.Comment.DisplayName.self,
-                    from: displayName.data(using: .utf8)!
-                )
+            createdBy: try! decodeFromJson(createdBy),
+            richText: try! decodeFromJson(richText),
+            attachments: try! decodeFromJson(attachments),
+            displayName: try! decodeFromJson(displayName)
         )
         
         #expect(decoded == expected)
@@ -188,36 +172,20 @@ struct CommentTests {
           "rich_text": \(richText),
           "display_name": \(displayName)
         }
-        """.data(using: .utf8)!
+        """
         
-        let decoderForBlock = JSONDecoder()
-        decoderForBlock.dateDecodingStrategy = .formatted(.iso8601Full)
+        let decoded: Comm = try decodeFromJson(json)
         
-        let decoded = try decoderForBlock.decode(
-            NotionSwift.Comment.self,
-            from: json
-        )
-        
-        let decoder = JSONDecoder()
-        
-        let expected = Comment(
+        let expected = Comm(
             id: id,
-            parent: try! decoder
-                .decode(
-                    NotionSwift.Comment.Parent.self,
-                    from: parent.data(using: .utf8)!
-                ),
+            parent: try! decodeFromJson(parent),
             discussionID: discussionID,
             createdTime: DateFormatter.iso8601Full.date(from: createdTime)!,
             lastEditedTime: DateFormatter.iso8601Full.date(from: lastEditedTime)!,
-            createdBy: try! decoder.decode(PartialUser.self, from: createdBy.data(using: .utf8)!),
-            richText: try! decoder.decode([RichText].self, from: richText.data(using: .utf8)!),
+            createdBy: try! decodeFromJson(createdBy),
+            richText: try! decodeFromJson(richText),
             attachments: nil,
-            displayName: try! decoder
-                .decode(
-                    NotionSwift.Comment.DisplayName.self,
-                    from: displayName.data(using: .utf8)!
-                )
+            displayName: try! decodeFromJson(displayName)
         )
         
         #expect(decoded == expected)

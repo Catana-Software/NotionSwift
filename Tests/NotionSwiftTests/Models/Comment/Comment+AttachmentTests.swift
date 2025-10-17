@@ -4,6 +4,8 @@ import Testing
 
 struct Comment_AttachmentTests {
     
+    private typealias Attachment = NotionSwift.Comment.Attachment
+    
     /// This sample is taken from the docs at
     /// https://developers.notion.com/reference/comment-attachment
     ///
@@ -28,21 +30,11 @@ struct Comment_AttachmentTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(.iso8601Full)
+        let value: Attachment = try decodeFromJson(json)
         
-        let value = try decoder
-            .decode(Comment.Attachment.self, from: data)
+        let encoded = try encodeToJson(value)
         
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .formatted(.iso8601Full)
-        
-        let encoded = try encoder
-            .encode(value)
-        
-        let decoded = try decoder
-            .decode(Comment.Attachment.self, from: encoded)
+        let decoded: Attachment = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         
