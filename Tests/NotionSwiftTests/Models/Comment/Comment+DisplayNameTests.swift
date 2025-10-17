@@ -4,6 +4,8 @@ import Testing
 
 struct Comment_DisplayNameTests {
     
+    private typealias DisplayName = NotionSwift.Comment.DisplayName
+    
     /// Sample JSON from https://developers.notion.com/reference/retrieve-comment
     /// relating to the response from comment API's
     @Test func decodesSampleResponse() throws {
@@ -16,9 +18,7 @@ struct Comment_DisplayNameTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let value = try JSONDecoder()
-            .decode(Comment.DisplayName.self, from: data)
+        let value: DisplayName = try decodeFromJson(json)
         
         switch value {
         case .integration(resolvedName: let resolvedName):
@@ -27,9 +27,8 @@ struct Comment_DisplayNameTests {
             #expect(Bool(false))
         }
         
-        let encoded = try JSONEncoder().encode(value)
-        let decoded = try JSONDecoder()
-            .decode(Comment.DisplayName.self, from: encoded)
+        let encoded = try encodeToJson(value)
+        let decoded: DisplayName = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         
@@ -45,9 +44,7 @@ struct Comment_DisplayNameTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let value = try JSONDecoder()
-            .decode(Comment.DisplayName.self, from: data)
+        let value: DisplayName = try decodeFromJson(json)
         
         switch value {
         case .custom(resolvedName: let resolvedName):
@@ -56,10 +53,8 @@ struct Comment_DisplayNameTests {
             #expect(Bool(false))
         }
         
-        let encoded = try JSONEncoder().encode(value)
-        let decoded = try JSONDecoder()
-        
-            .decode(Comment.DisplayName.self, from: encoded)
+        let encoded = try encodeToJson(value)
+        let decoded: DisplayName = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         
@@ -75,9 +70,7 @@ struct Comment_DisplayNameTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let value = try JSONDecoder()
-            .decode(Comment.DisplayName.self, from: data)
+        let value: DisplayName = try decodeFromJson(json)
         
         switch value {
         case .user(resolvedName: let resolvedName):
@@ -86,9 +79,8 @@ struct Comment_DisplayNameTests {
             #expect(Bool(false))
         }
         
-        let encoded = try JSONEncoder().encode(value)
-        let decoded = try JSONDecoder()
-            .decode(Comment.DisplayName.self, from: encoded)
+        let encoded = try encodeToJson(value)
+        let decoded: DisplayName = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         

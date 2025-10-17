@@ -9,9 +9,8 @@ struct RichTextTypeTests {
         
         let base = RichTextType.unknown
         
-        let encoder = JSONEncoder()
-        let encoded = try encoder.encode(base)
-        let decoded = try JSONDecoder().decode(RichTextType.self, from: encoded)
+        let encoded = try encodeToJson(base)
+        let decoded: RichTextType = try decodeFromJson(encoded)
         
         #expect(decoded == base)
         

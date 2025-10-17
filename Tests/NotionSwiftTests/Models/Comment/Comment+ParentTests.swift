@@ -4,6 +4,8 @@ import Testing
 
 struct Comment_ParentTests {
     
+    private typealias Parent = NotionSwift.Comment.Parent
+    
     /// Sample JSON from https://developers.notion.com/reference/parent-object
     @Test func decodesDatabaseSampleResponse() throws {
         
@@ -16,9 +18,7 @@ struct Comment_ParentTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let value = try JSONDecoder()
-            .decode(Comment.Parent.self, from: data)
+        let value: Parent = try decodeFromJson(json)
         
         switch value {
         case .database(let id):
@@ -27,9 +27,8 @@ struct Comment_ParentTests {
             #expect(Bool(false))
         }
         
-        let encoded = try JSONEncoder().encode(value)
-        let decoded = try JSONDecoder()
-            .decode(Comment.Parent.self, from: encoded)
+        let encoded = try encodeToJson(value)
+        let decoded: Parent = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         
@@ -48,9 +47,7 @@ struct Comment_ParentTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let value = try JSONDecoder()
-            .decode(Comment.Parent.self, from: data)
+        let value: Parent = try decodeFromJson(json)
         
         switch value {
         case .dataSource(let ds, let db):
@@ -60,9 +57,8 @@ struct Comment_ParentTests {
             #expect(Bool(false))
         }
         
-        let encoded = try JSONEncoder().encode(value)
-        let decoded = try JSONDecoder()
-            .decode(Comment.Parent.self, from: encoded)
+        let encoded = try encodeToJson(value)
+        let decoded: Parent = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         
@@ -79,9 +75,7 @@ struct Comment_ParentTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let value = try JSONDecoder()
-            .decode(Comment.Parent.self, from: data)
+        let value: Parent = try decodeFromJson(json)
         
         switch value {
         case .page(let id):
@@ -90,9 +84,8 @@ struct Comment_ParentTests {
             #expect(Bool(false))
         }
         
-        let encoded = try JSONEncoder().encode(value)
-        let decoded = try JSONDecoder()
-            .decode(Comment.Parent.self, from: encoded)
+        let encoded = try encodeToJson(value)
+        let decoded: Parent = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         
@@ -107,9 +100,7 @@ struct Comment_ParentTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let value = try JSONDecoder()
-            .decode(Comment.Parent.self, from: data)
+        let value: Parent = try decodeFromJson(json)
         
         switch value {
         case .workspace:
@@ -118,9 +109,8 @@ struct Comment_ParentTests {
             #expect(Bool(false))
         }
         
-        let encoded = try JSONEncoder().encode(value)
-        let decoded = try JSONDecoder()
-            .decode(Comment.Parent.self, from: encoded)
+        let encoded = try encodeToJson(value)
+        let decoded: Parent = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         
@@ -137,9 +127,7 @@ struct Comment_ParentTests {
         }
         """
         
-        let data = Data(json.utf8)
-        let value = try JSONDecoder()
-            .decode(Comment.Parent.self, from: data)
+        let value: Parent = try decodeFromJson(json)
         
         switch value {
         case .block(let id):
@@ -148,9 +136,8 @@ struct Comment_ParentTests {
             #expect(Bool(false))
         }
         
-        let encoded = try JSONEncoder().encode(value)
-        let decoded = try JSONDecoder()
-            .decode(Comment.Parent.self, from: encoded)
+        let encoded = try encodeToJson(value)
+        let decoded: Parent = try decodeFromJson(encoded)
         
         #expect(decoded == value)
         
@@ -167,16 +154,14 @@ struct Comment_ParentTests {
         }
         """
         
-        let data = Data(json.utf8)
-        
         #expect(throws: Error.self) {
-            _ = try JSONDecoder().decode(Comment.Parent.self, from: data)
+            let _: Parent = try decodeFromJson(json)
         }
         
         var thrown: Error?
         do {
             
-            _ = try JSONDecoder().decode(Comment.Parent.self, from: data)
+            let _: Parent = try decodeFromJson(json)
             
         } catch {
             

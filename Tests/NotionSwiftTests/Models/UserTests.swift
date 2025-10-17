@@ -13,8 +13,8 @@ struct UserTests {
             avatarURL: URL.temporaryDirectory.path()
         )
         
-        let encoded = try JSONEncoder().encode(user)
-        let decoded = try JSONDecoder().decode(User.self, from: encoded)
+        let encoded = try encodeToJson(user)
+        let decoded: User = try decodeFromJson(encoded)
         
         #expect(user == decoded)
         
@@ -72,8 +72,8 @@ struct UserTests {
             avatarURL: URL.temporaryDirectory.path()
         )
         
-        let encoded = try JSONEncoder().encode(user)
-        let decoded = try JSONDecoder().decode(User.self, from: encoded)
+        let encoded = try encodeToJson(user)
+        let decoded: User = try decodeFromJson(encoded)
         
         #expect(user == decoded)
         
