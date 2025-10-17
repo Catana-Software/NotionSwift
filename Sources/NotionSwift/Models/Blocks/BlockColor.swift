@@ -3,7 +3,7 @@
 //
 import Foundation
 
-public enum BlockColor: Equatable, RawRepresentable, Sendable {
+public enum BlockColor: Equatable, Sendable {
     case `default`
     case gray
     case brown
@@ -24,30 +24,41 @@ public enum BlockColor: Equatable, RawRepresentable, Sendable {
     case pinkBackground
     case redBackground
     case unknown(String)
-    
-    public init?(rawValue: String) {
-        let cases: [Self] = [.default,
-                     .gray,
-                     .brown,
-                     .orange,
-                     .yellow,
-                     .green,
-                     .blue,
-                     .purple,
-                     .pink,
-                     .red,
-                     .grayBackground,
-                     .brownBackground,
-                     .orangeBackground,
-                     .yellowBackground,
-                     .greenBackground,
-                     .blueBackground,
-                     .purpleBackground,
-                     .pinkBackground,
-                     .redBackground
+}
+
+extension BlockColor : CaseIterable {
+
+    public static var allCases: [BlockColor] {
+        [
+            .default,
+            .gray,
+            .brown,
+            .orange,
+            .yellow,
+            .green,
+            .blue,
+            .purple,
+            .pink,
+            .red,
+            .grayBackground,
+            .brownBackground,
+            .orangeBackground,
+            .yellowBackground,
+            .greenBackground,
+            .blueBackground,
+            .purpleBackground,
+            .pinkBackground,
+            .redBackground
         ]
+    }
+
+}
+
+extension BlockColor : RawRepresentable {
+
+    public init?(rawValue: String) {
         let value = rawValue.lowercased().trimmingCharacters(in: CharacterSet.whitespaces)
-        guard let item = cases.first(where: { $0.rawValue == value }) else {
+        guard let item = Self.allCases.first(where: { $0.rawValue == value }) else {
             return nil
         }
         

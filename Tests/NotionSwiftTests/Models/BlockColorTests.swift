@@ -37,4 +37,19 @@ final class BlockColorTest: XCTestCase {
 
         XCTAssertEqual(result, BlockColor.unknown("something"))
     }
+    
+    func testEndToEndCodable() throws {
+
+        for _ in 0..<1000 {
+
+            let color = BlockColor.allCases.randomElement()!
+
+            let encoded = try encodeToJson(color)
+            let decoded: BlockColor = try decodeFromJson(encoded)
+
+            XCTAssertEqual(decoded, color)
+
+        }
+
+    }
 }
