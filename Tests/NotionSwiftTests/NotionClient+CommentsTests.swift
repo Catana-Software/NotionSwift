@@ -1,6 +1,6 @@
 @testable import NotionSwift
-import Testing
 import Foundation
+import Testing
 
 struct NotionClient_CommentsTests {
     

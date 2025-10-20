@@ -40,7 +40,7 @@ import Foundation
         /// Information about the comment's parent block or entity
         ///
         /// The parent typically identifies where this comment lives (for example,
-        /// a page or a specific block). See `BlockType.CommentBlockValue.Parent`
+        /// a page or a specific block). See `Comment.Parent`
         public let parent: Parent
         
         /// Unique identifier for the discussion thread that this comment belongs to
@@ -77,7 +77,7 @@ import Foundation
         /// Custom display name on comment
         public let displayName: DisplayName
         
-        /// Creates a new `CommentBlockValue`.
+        /// Creates a new `Comment`.
         ///
         /// - Parameter id: Unique identifier of the comment.
         /// - Parameter parent: Information about the comment's parent block or entity.

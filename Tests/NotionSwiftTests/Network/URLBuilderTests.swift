@@ -1,5 +1,5 @@
-import Foundation
 @testable import NotionSwift
+import Foundation
 import Testing
 
 struct URLBuilderTests {
