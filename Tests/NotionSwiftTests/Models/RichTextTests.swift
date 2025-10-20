@@ -5,31 +5,9 @@ import Testing
 struct RichTextTests {
     
     func randomColor() -> String {
-        
-        let colors = [
-            "blue",
-            "blue_background",
-            "brown",
-            "brown_background",
-            "default",
-            "gray",
-            "gray_background",
-            "green",
-            "green_background",
-            "orange",
-            "orange_background",
-            "pink",
-            "pink_background",
-            "purple",
-            "purple_background",
-            "red",
-            "red_background",
-            "yellow",
-            "yellow_background"
-        ]
-        
-        return colors.randomElement()!
-        
+
+        BlockColor.allCases.randomElement().map(\.rawValue) ?? "default"
+
     }
     
     @Test(.disabled("Disabled until reason for inconsistent implementation found"))

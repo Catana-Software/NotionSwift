@@ -24,36 +24,47 @@ public enum BlockColor: Equatable, Sendable {
     case pinkBackground
     case redBackground
     case unknown(String)
-    
-    init?(_ rawValue: String) {
-        let cases: [Self] = [.default,
-                     .gray,
-                     .brown,
-                     .orange,
-                     .yellow,
-                     .green,
-                     .blue,
-                     .purple,
-                     .pink,
-                     .red,
-                     .grayBackground,
-                     .brownBackground,
-                     .orangeBackground,
-                     .yellowBackground,
-                     .greenBackground,
-                     .blueBackground,
-                     .purpleBackground,
-                     .pinkBackground,
-                     .redBackground
+}
+
+extension BlockColor : CaseIterable {
+
+    public static var allCases: [BlockColor] {
+        [
+            .default,
+            .gray,
+            .brown,
+            .orange,
+            .yellow,
+            .green,
+            .blue,
+            .purple,
+            .pink,
+            .red,
+            .grayBackground,
+            .brownBackground,
+            .orangeBackground,
+            .yellowBackground,
+            .greenBackground,
+            .blueBackground,
+            .purpleBackground,
+            .pinkBackground,
+            .redBackground
         ]
+    }
+
+}
+
+extension BlockColor : RawRepresentable {
+
+    public init?(rawValue: String) {
         let value = rawValue.lowercased().trimmingCharacters(in: CharacterSet.whitespaces)
-        guard let item = cases.first(where: { $0.rawValue == value }) else {
+        guard let item = Self.allCases.first(where: { $0.rawValue == value }) else {
             return nil
         }
         
         self = item
     }
-    
+
     public var rawValue: String {
         switch self {
         case .default:
@@ -104,7 +115,7 @@ extension BlockColor: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
-        guard let value = Self(rawValue) else {
+        guard let value = Self(rawValue: rawValue) else {
             self = .unknown(rawValue)
             return
         }
