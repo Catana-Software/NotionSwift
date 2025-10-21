@@ -6,6 +6,24 @@ struct CommentTests {
     
     private typealias Comm = NotionSwift.Comment
     
+    private func makeComment(richText: [RichText]) -> Comm {
+        
+        let comment = Comm(
+            id: UUID().uuidString,
+            parent: .workspace,
+            discussionID: UUID().uuidString,
+            createdTime: .now,
+            lastEditedTime: .now,
+            createdBy: .init(id: .init(UUID().uuidString)),
+            richText: richText,
+            attachments: nil,
+            displayName: .custom(resolvedName: "Bot")
+        )
+        
+        return comment
+        
+    }
+    
     /// Sample JSON from https://developers.notion.com/reference/comment-object
     @Test func decodesSampleResponse() throws {
         
@@ -31,6 +49,8 @@ struct CommentTests {
           }
         """
         
+        let plainText = "Hello world"
+        
         let richText = """
         [
           {
@@ -47,7 +67,7 @@ struct CommentTests {
               "code": false,
               "color": "default"
             },
-            "plain_text": "Hello world",
+            "plain_text": "\(plainText)",
             "href": null
           }
         ]
@@ -103,6 +123,9 @@ struct CommentTests {
         
         #expect(decoded == expected)
         
+        // Use this construction of a comment to inspect our computed `plainText` property
+        #expect(decoded.plainText == plainText)
+        
     }
     
     /// Sample from comments API response docs at
@@ -131,6 +154,8 @@ struct CommentTests {
           }
         """
         
+        let plainText = "hello there"
+        
         let richText = """
           [
             {
@@ -147,7 +172,7 @@ struct CommentTests {
                 "code": false,
                 "color": "default"
               },
-              "plain_text": "hello there",
+              "plain_text": "\(plainText)",
               "href": null
             }
           ]
@@ -189,6 +214,47 @@ struct CommentTests {
         )
         
         #expect(decoded == expected)
+        #expect(decoded.plainText == plainText)
+        
+    }
+    
+    @Test func plainTextEmptyForEmptyRichText() {
+        
+        let comment = makeComment(richText: [])
+        
+        #expect(comment.plainText == "")
+        
+    }
+    
+    @Test func plainTextEmptyForRichTextNilPlainText() throws {
+        
+        let richText = RichText(string: "This has no plain text")
+        
+        try #require(richText.plainText == nil)
+        
+        let comment = makeComment(richText: [richText])
+        
+        #expect(comment.plainText == "")
+        
+    }
+    
+    @Test func plainTextContainedAllPlainText() throws {
+        
+        let thisIs = "This is "
+        let richText0 = RichText(plainText: thisIs, type: .text(.init(content: thisIs)))
+        
+        let aString = "a string "
+        let richText1 = RichText(plainText: aString, type: .text(.init(content: aString)))
+        
+        let link = UUID().uuidString
+        let richText2 = RichText(
+            plainText: link,
+            type: .mention(.init(type: .page(.init(.init(UUID().uuidString)))))
+        )
+        
+        let comment = makeComment(richText: [richText0, richText1, richText2])
+        
+        #expect(comment.plainText == thisIs + aString + link)
         
     }
     

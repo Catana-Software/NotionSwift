@@ -77,6 +77,15 @@ import Foundation
         /// Custom display name on comment
         public let displayName: DisplayName
         
+        /// A helper computed property to return the contents of `richText` as a joined
+        /// plain text `String`. This property relies upon the API response also containing
+        /// a value for the `plainText` property of the `RichText` object
+        public var plainText: String {
+            return richText
+                .compactMap(\.plainText)
+                .joined()
+        }
+        
         /// Creates a new `Comment`.
         ///
         /// - Parameter id: Unique identifier of the comment.
