@@ -42,6 +42,7 @@ extension Comment.DisplayName: Codable {
         let name = try container.decode(String.self, forKey: .resolvedName)
         
         switch type {
+            
         case .integration:
             self = .integration(resolvedName: name)
             

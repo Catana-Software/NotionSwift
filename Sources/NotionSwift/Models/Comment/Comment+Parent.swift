@@ -30,8 +30,9 @@ extension Comment {
         case workspace
         
         /// The comment belongs to a block. A page may have a block parent if it is created
-        /// inline in a chunk of text, or is located beneath another block like a toggle or
-        /// bullet block
+        /// inline in a chunk of text.
+        ///
+        /// - Parameter id: The identifier of the block that owns the comment.
         case block(UUIDv4)
         
     }
@@ -55,6 +56,7 @@ extension Comment.Parent: Codable {
         let type = try container.decode(String.self, forKey: .type)
         
         switch type {
+            
         case CodingKeys.databaseId.rawValue:
             let id = try container.decode(UUIDv4.self, forKey: .databaseId)
             self = .database(id)
@@ -93,6 +95,7 @@ extension Comment.Parent: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         switch self {
+            
         case .database(let id):
             try container.encode(CodingKeys.databaseId.rawValue, forKey: .type)
             try container.encode(id, forKey: .databaseId)
