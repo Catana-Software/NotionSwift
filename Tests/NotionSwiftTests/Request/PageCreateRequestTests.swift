@@ -19,7 +19,7 @@ final class PageCreateRequestTests: XCTestCase {
 
         let result = try encodeToJson(given)
 
-        XCTAssertEqual(result, #"{"children":[],"parent":{"page_id":"12345"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"}}]}}}"#)
+        XCTAssertEqual(result, #"{"children":[],"parent":{"page_id":"12345"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}"#)
     }
 
     func test_propertiesAndChildrenEncoding_case01() throws {
@@ -35,7 +35,7 @@ final class PageCreateRequestTests: XCTestCase {
 
         let result = try encodeToJson(given)
 
-        XCTAssertEqual(result, #"{"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "}}]},"type":"paragraph"}],"parent":{"page_id":"12345"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"}}]}}}"#)
+        XCTAssertEqual(result, #"{"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"12345"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}"#)
     }
 
     func test_childrenEncoding_case01() throws {
@@ -52,7 +52,7 @@ final class PageCreateRequestTests: XCTestCase {
 
         let result = try encodeToJson(given)
 
-        XCTAssertEqual(result, #"{"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "}}]},"type":"paragraph"}],"parent":{"page_id":"12345"},"properties":{}}"#)
+        XCTAssertEqual(result, #"{"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"12345"},"properties":{}}"#)
     }
     
     func test_childrenEncoding_case02() throws {
@@ -76,6 +76,6 @@ final class PageCreateRequestTests: XCTestCase {
 
         let result = try encodeToJson(given)
 
-        XCTAssertEqual(result, #"{"children":[{"column_list":{"children":[{"column":{"children":[{"paragraph":{"color":"yellow","rich_text":[{"text":{"content":"Column 1"}}]},"type":"paragraph"}]},"type":"column"},{"column":{"children":[{"paragraph":{"color":"green","rich_text":[{"text":{"content":"Column 2"}}]},"type":"paragraph"}]},"type":"column"}]},"object":"block","type":"column_list"}],"parent":{"page_id":"12345"},"properties":{}}"#)
+        XCTAssertEqual(result, #"{"children":[{"column_list":{"children":[{"column":{"children":[{"paragraph":{"color":"yellow","rich_text":[{"text":{"content":"Column 1"},"type":"text"}]},"type":"paragraph"}]},"type":"column"},{"column":{"children":[{"paragraph":{"color":"green","rich_text":[{"text":{"content":"Column 2"},"type":"text"}]},"type":"paragraph"}]},"type":"column"}]},"object":"block","type":"column_list"}],"parent":{"page_id":"12345"},"properties":{}}"#)
     }
 }

@@ -4,7 +4,7 @@ import Testing
 
 struct BlockType_CodableTests {
     
-    @Test(.disabled("Until codable conformance for RichTest is symmetrical"))
+    @Test
     func codable() throws {
         
         let tableRow = BlockType

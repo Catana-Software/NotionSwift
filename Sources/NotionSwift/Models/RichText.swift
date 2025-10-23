@@ -54,6 +54,18 @@ public struct RichText {
         self.type = type
     }
 
+    /// A more useful init that handles the apparently usual case that plainText and type text are the same
+    public init(
+        plainText: String,
+        href: String? = nil,
+        annotations: RichText.Annotations = .default
+    ) {
+        self.plainText = plainText
+        self.href = href
+        self.annotations = annotations
+        self.type = .text(.init(content: plainText))
+    }
+
     public init(string: String, annotations: RichText.Annotations = .default) {
         self.init(
             plainText: nil,
@@ -101,9 +113,9 @@ extension RichText: Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.plainText = try container.decode(String?.self, forKey: .plainText)
-        self.href = try container.decode(String?.self, forKey: .href)
-        self.annotations = try container.decode(Annotations.self, forKey: .annotations)
+        self.plainText = try container.decodeIfPresent(String.self, forKey: .plainText)
+        self.href = try container.decodeIfPresent(String.self, forKey: .href)
+        self.annotations = try container.decodeIfPresent(Annotations.self, forKey: .annotations) ?? .default
         self.type = try RichTextType(from: decoder)
     }
 
@@ -114,6 +126,7 @@ extension RichText: Codable {
         if annotations != .default {
             try container.encode(annotations, forKey: .annotations)
         }
+        try container.encode(type.codingKey.rawValue, forKey: .type)
         try type.encode(to: encoder)
     }
 }
@@ -121,16 +134,26 @@ extension RichText: Codable {
 extension RichText.Annotations: Codable {}
 
 extension RichTextType: Codable {
-    enum CodingKeys: String, CodingKey {
-        case type
+    public enum CodingKeys: String, CodingKey {
+        case type // this is a bizarre self-referential use of coding keys
         case text
         case mention
         case equation
+        case unknown
+    }
+
+    public var codingKey : CodingKeys {
+        switch self {
+        case .text: return .text
+        case .mention: return .mention
+        case .equation: return .equation
+        default: return .unknown
+        }
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try container.decode(String.self, forKey: .type)
+        let type = try container.decodeIfPresent(String.self, forKey: .type) ?? CodingKeys.unknown.rawValue
 
         switch type {
         case CodingKeys.text.stringValue:

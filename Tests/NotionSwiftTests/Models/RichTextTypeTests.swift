@@ -4,7 +4,7 @@ import Testing
 
 struct RichTextTypeTests {
     
-    @Test(.disabled("Unable to end to end test currently"))
+    @Test
     func unknownEndToEndCodable() throws {
         
         let base = RichTextType.unknown
