@@ -56,4 +56,30 @@ extension NotionClient {
         
     }
     
+    /// Creates a new comment in Notion
+    ///
+    /// Sends a POST request to the Notion API endpoint `/v1/comments` to create a comment
+    /// associated with a specific block or discussion thread.
+    ///
+    /// See Notion API: https://developers.notion.com/reference/create-a-comment
+    ///
+    /// - Parameter request: The payload describing the comment to create, including the target
+    ///   context (e.g., a block ID or discussion ID) and the comment content.
+    /// - Parameter completed: A closure invoked upon completion with a `Result` containing:
+    ///   - `.success(Comment)`: The newly created `Comment` returned by the API.
+    ///   - `.failure(NotionClientError)`: An error describing why the request failed.
+    public func create(
+        request: Comment.CreateRequest,
+        completed: @Sendable @escaping (Result<Comment, NotionClientError>) -> Void
+    ) {
+        
+        networkClient.post(
+            urlBuilder.url(path: "/v1/comments"),
+            body: request,
+            headers: headers(),
+            completed: completed
+        )
+        
+    }
+    
 }

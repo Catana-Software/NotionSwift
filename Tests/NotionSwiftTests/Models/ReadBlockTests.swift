@@ -4,12 +4,9 @@ import Testing
 
 struct ReadBlockTests {
     
-    @Test(.disabled("Disabled until coding conflict can be resolved"))
     func endToEndCodable() throws {
         
         let partialUser = PartialUser(id: .init(UUID().uuidString))
-        
-        // This `.divider` type will throw a decoding type mismatch error
         
         let base = ReadBlock(
             id: .init(UUID().uuidString),
