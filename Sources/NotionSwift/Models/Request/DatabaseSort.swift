@@ -50,5 +50,8 @@ extension DatabaseSort {
 // MARK: - Codable
 
 extension DatabaseSort: Encodable {}
+extension DatabaseSort: Sendable {}
 extension DatabaseSort.TimestampValue: Encodable {}
+extension DatabaseSort.TimestampValue: Sendable{}
 extension DatabaseSort.DirectionValue: Encodable {}
+extension DatabaseSort.DirectionValue: Sendable {}

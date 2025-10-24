@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum DatabaseFilterType {
+public enum DatabaseFilterType: Sendable {
     case databaseProperty(DatabasePropertyFilter)
     case compound(CompountFilterType)
 }

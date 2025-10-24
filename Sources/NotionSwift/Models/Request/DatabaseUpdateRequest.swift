@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct DatabaseUpdateRequest {
+public struct DatabaseUpdateRequest: Sendable {
     public let title: [RichText]?
     public let icon: IconFile?
     public let cover: CoverFile?

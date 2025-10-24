@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum CompountFilterType {
+public enum CompountFilterType: Sendable {
     case or([DatabaseFilterType])
     case and([DatabaseFilterType])
 }

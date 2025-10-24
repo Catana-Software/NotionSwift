@@ -4,8 +4,8 @@
 
 import Foundation
 
-public struct PageUpdateRequest {
-    public enum Key: Hashable, Equatable  {
+public struct PageUpdateRequest: Sendable {
+    public enum Key: Hashable, Equatable, Sendable  {
         case name(Page.PropertyName)
         case id(PageProperty.Identifier)
     }

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct DatabaseFilter {
+public struct DatabaseFilter: Sendable {
     let array: [DatabaseFilterType]
 }
 

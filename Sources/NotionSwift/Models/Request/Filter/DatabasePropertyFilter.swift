@@ -4,13 +4,13 @@
 
 import Foundation
 
-public struct DatabasePropertyFilter {
+public struct DatabasePropertyFilter: Sendable {
     public let property: String
     public let filterType: PropertyType
 }
 
 extension DatabasePropertyFilter {
-    public enum PropertyType {
+    public enum PropertyType: Sendable {
         case title(TextCondition)
         case richText(TextCondition)
         case url(TextCondition)
@@ -34,7 +34,7 @@ extension DatabasePropertyFilter {
 }
 
 extension DatabasePropertyFilter {
-    public enum FormulaCondition {
+    public enum FormulaCondition: Sendable {
         case string(TextCondition)
         case checkbox(CheckboxCondition)
         case number(NumberCondition)
@@ -43,14 +43,14 @@ extension DatabasePropertyFilter {
 }
 
 extension DatabasePropertyFilter {
-    public enum FilesCondition {
+    public enum FilesCondition: Sendable {
         case isEmpty
         case isNotEmpty
     }
 }
 
 extension DatabasePropertyFilter {
-    public enum DateCondition {
+    public enum DateCondition: Sendable {
         case equals(Date)
         case before(Date)
         case after(Date)
@@ -69,7 +69,7 @@ extension DatabasePropertyFilter {
 }
 
 extension DatabasePropertyFilter {
-    public enum SimpleGenericCondition<T: Encodable> {
+    public enum SimpleGenericCondition<T: Encodable & Sendable>: Sendable where T: Sendable {
         case contains(T)
         case doesNotContain(T)
         case isEmpty
@@ -78,14 +78,14 @@ extension DatabasePropertyFilter {
 }
 
 extension DatabasePropertyFilter {
-    public enum CheckboxCondition {
+    public enum CheckboxCondition: Sendable {
         case equals(Bool)
         case doesNotEqual(Bool)
     }
 }
 
 extension DatabasePropertyFilter {
-    public enum NumberCondition {
+    public enum NumberCondition: Sendable {
         case equals(Double)
         case doesNotEqual(Double)
         case greaterThan(Double)
@@ -98,7 +98,7 @@ extension DatabasePropertyFilter {
 }
 
 extension DatabasePropertyFilter {
-    public enum TextCondition {
+    public enum TextCondition: Sendable {
         case equals(String)
         case doesNotEqual(String)
         case contains(String)
@@ -111,10 +111,11 @@ extension DatabasePropertyFilter {
 }
 
 extension DatabasePropertyFilter {
-    public enum StatusCondition {
+    public enum StatusCondition: Sendable {
         case equals(String)
         case doesNotEqual(String)
         case isEmpty
         case isNotEmpty
     }
 }
+

@@ -70,7 +70,12 @@ extension SearchRequest: Encodable {
     }
 }
 
+extension SearchRequest: Sendable {}
 extension SearchRequest.Sort: Encodable {}
+extension SearchRequest.Sort: Sendable {}
 extension SearchRequest.Sort.TimestampValue: Encodable {}
+extension SearchRequest.Sort.TimestampValue: Sendable {}
 extension SearchRequest.Sort.DirectionValue: Encodable {}
+extension SearchRequest.Sort.DirectionValue: Sendable {}
 extension SearchRequest.Filter: Encodable {}
+extension SearchRequest.Filter: Sendable {}

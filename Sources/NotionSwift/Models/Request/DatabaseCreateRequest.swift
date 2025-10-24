@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct DatabaseCreateRequest {
+public struct DatabaseCreateRequest: Sendable {
     public let parent: DatabaseParent
     public let icon: IconFile?
     public let cover: CoverFile?
