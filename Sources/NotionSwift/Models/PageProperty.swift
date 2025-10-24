@@ -533,6 +533,8 @@ extension PagePropertyType.RollupPropertyValue: Codable {
 extension PageProperty: Equatable {}
 extension PageProperty: Sendable {}
 
+extension WritePageProperty: Sendable {}
+
 extension PagePropertyType.FilesPropertyValue.FileLink: Equatable {}
 extension PagePropertyType.FilesPropertyValue.FileLink: Sendable {}
 

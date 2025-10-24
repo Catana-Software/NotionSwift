@@ -23,3 +23,4 @@ public struct PageCreateRequest {
 // MARK: - Codable
 
 extension PageCreateRequest: Encodable {}
+extension PageCreateRequest: Sendable {}
