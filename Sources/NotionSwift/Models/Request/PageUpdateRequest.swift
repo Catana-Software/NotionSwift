@@ -14,17 +14,23 @@ public struct PageUpdateRequest: Sendable {
     public let archived: Bool?
     public let icon: IconFile?
     public let cover: CoverFile?
+    public let eraseContent: Bool?
+    public let isLocked: Bool?
 
     public init(
         properties: [Key: WritePageProperty]? = nil,
         archived: Bool? = nil,
         icon: IconFile? = nil,
-        cover: CoverFile? = nil
+        cover: CoverFile? = nil,
+        eraseContent: Bool? = nil,
+        isLocked: Bool? = nil
     ) {
         self.properties = properties
         self.archived = archived
         self.icon = icon
         self.cover = cover
+        self.eraseContent = eraseContent
+        self.isLocked = isLocked
     }
 
 }
@@ -35,6 +41,8 @@ extension PageUpdateRequest: Encodable {
         case archived
         case icon
         case cover
+        case eraseContent = "erase_content"
+        case isLocked = "is_locked"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -58,6 +66,8 @@ extension PageUpdateRequest: Encodable {
         try container.encodeIfPresent(archived, forKey: .archived)
         try container.encodeIfPresent(icon, forKey: .icon)
         try container.encodeIfPresent(cover, forKey: .cover)
+        try container.encodeIfPresent(eraseContent, forKey: .eraseContent)
+        try container.encodeIfPresent(isLocked, forKey: .isLocked)
     }
 }
 
