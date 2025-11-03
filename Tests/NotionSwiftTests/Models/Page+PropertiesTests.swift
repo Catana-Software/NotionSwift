@@ -6,10 +6,10 @@ struct Page_PropertiesTests {
     
     func makePage(properties: [Page.PropertyName: PageProperty]) -> Page {
         
-        let user = PartialUser(id: .init(UUID().uuidString))
+        let user = PartialUser(id: .init(UUIDv4()))
         
         let page = Page(
-            id: .init(UUID().uuidString),
+            id: .init(UUIDv4()),
             createdTime: .now,
             lastEditedTime: .now,
             createdBy: user,
@@ -29,7 +29,7 @@ struct Page_PropertiesTests {
     @Test func pageWithoutTitleReturnsNil() {
         
         let properties = [
-            "Not a title": PageProperty(id: .init(UUID().uuidString), type: .createdTime(.now))
+            "Not a title": PageProperty(id: .init(UUIDv4().uuidString), type: .createdTime(.now))
         ]
         
         let page = makePage(properties: properties)

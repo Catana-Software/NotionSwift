@@ -9,12 +9,12 @@ struct CommentTests {
     private func makeComment(richText: [RichText]) -> Comm {
         
         let comment = Comm(
-            id: UUID().uuidString,
+            id: UUIDv4(),
             parent: .workspace,
-            discussionID: UUID().uuidString,
+            discussionID: UUIDv4(),
             createdTime: .now,
             lastEditedTime: .now,
-            createdBy: .init(id: .init(UUID().uuidString)),
+            createdBy: .init(id: .init(UUIDv4())),
             richText: richText,
             attachments: nil,
             displayName: .custom(resolvedName: "Bot")
@@ -27,7 +27,7 @@ struct CommentTests {
     /// Sample JSON from https://developers.notion.com/reference/comment-object
     @Test func decodesSampleResponse() throws {
         
-        let id = "7a793800-3e55-4d5e-8009-2261de026179"
+        let id = try #require(UUIDv4(uuidString: "7a793800-3e55-4d5e-8009-2261de026179"))
         
         let parent = """
           {
@@ -36,7 +36,7 @@ struct CommentTests {
           }
         """
         
-        let discussionID = "f4be6752-a539-4da2-a8a9-c3953e13bc0b"
+        let discussionID = try #require(UUIDv4(uuidString: "f4be6752-a539-4da2-a8a9-c3953e13bc0b"))
         
         let createdTime = "2022-07-15T21:17:00.000Z"
         
@@ -95,9 +95,9 @@ struct CommentTests {
         let json = """
         {
           "object": "comment",
-          "id": "\(id)",
+          "id": "\(id.uuidString)",
           "parent": \(parent),
-          "discussion_id": "\(discussionID)",
+          "discussion_id": "\(discussionID.uuidString)",
           "created_time": "\(createdTime)",
           "last_edited_time": "\(lastEditedTime)",
           "created_by": \(createdBy),
@@ -132,16 +132,28 @@ struct CommentTests {
     /// https://developers.notion.com/reference/retrieve-comment
     @Test func decodesSampleWithoutAttachments() throws {
         
-        let id = "249911a-125e-803e-a164-001cf338b8ec"
+        // Note: The sample provided at the above URL is not a valid UUIDv4, and so
+        // it has been altered here, as presumably that is a mistake in the docs, and
+        // not intentional case to handle a missing char in a UUIDv4
+        // Original first 8: 249911a
+        // Altered first 8: 26E409D8
+        let id = try #require(UUIDv4(uuidString: "26E409D8-125e-803e-a164-001cf338b8ec"))
         
+        // This example includes invalid chars
+        // Original first 8: 247vw11a
+        // Altered first 8: 247ae11a
+        let parentId = try #require(UUIDv4(uuidString: "247ae11a-125e-8053-8e73-d3b3ed4f5768"))
         let parent = """
           {
             "type": "block_id",
-            "block_id": "247vw11a-125e-8053-8e73-d3b3ed4f5768"
+            "block_id": "\(parentId.uuidString)"
           }
         """
         
-        let discussionID = "1mv7b911a-125e-80df-8c9e-001c179f63ef"
+        // Likewise here
+        // Original first 8: 1mv7b911a (9)
+        // Altered first 8: C83CA45A
+        let discussionID = try #require(UUIDv4(uuidString: "C83CA45A-125e-80df-8c9e-001c179f63ef"))
         
         let createdTime = "2025-08-06T20:36:00.000Z"
         
@@ -188,9 +200,9 @@ struct CommentTests {
         let json = """
         {
           "object": "comment",
-          "id": "\(id)",
+          "id": "\(id.uuidString)",
           "parent": \(parent),
-          "discussion_id": "\(discussionID)",
+          "discussion_id": "\(discussionID.uuidString)",
           "created_time": "\(createdTime)",
           "last_edited_time": "\(lastEditedTime)",
           "created_by": \(createdBy),
@@ -246,10 +258,10 @@ struct CommentTests {
         let aString = "a string "
         let richText1 = RichText(plainText: aString, type: .text(.init(content: aString)))
         
-        let link = UUID().uuidString
+        let link = UUIDv4().uuidString
         let richText2 = RichText(
             plainText: link,
-            type: .mention(.init(type: .page(.init(.init(UUID().uuidString)))))
+            type: .mention(.init(type: .page(.init(.init(UUIDv4())))))
         )
         
         let comment = makeComment(richText: [richText0, richText1, richText2])

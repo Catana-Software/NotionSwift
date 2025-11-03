@@ -15,12 +15,12 @@ struct NotionClient_CommentsTests {
         displayName: Comm.DisplayName = .custom(resolvedName: "Bot")
     ) -> Comm {
         Comm(
-            id: UUID().uuidString,
+            id: UUID(),
             parent: .workspace,
-            discussionID: UUID().uuidString,
+            discussionID: UUID(),
             createdTime: .now,
             lastEditedTime: .now,
-            createdBy: PartialUser(id: .init(UUID().uuidString)),
+            createdBy: PartialUser(id: .init(UUID())),
             richText: richText,
             attachments: nil,
             displayName: displayName
@@ -36,7 +36,7 @@ struct NotionClient_CommentsTests {
             networkClient: MockNetworkClient(failure: .unsupportedResponseError)
         )
         
-        client.comment(id: UUID().uuidString) { result in
+        client.comment(id: UUID()) { result in
             
             switch result {
             case .success: #expect(Bool(false))
@@ -56,7 +56,7 @@ struct NotionClient_CommentsTests {
         
         let comment = makeComment(richText: [richText])
         
-        let requestID = UUID().uuidString
+        let requestID = UUID()
         
         let expectedURL = URLBuilder()
             .url(
@@ -95,7 +95,7 @@ struct NotionClient_CommentsTests {
             pageSize: 20
         )
         
-        client.comments(id: UUID().uuidString, params: params) { result in
+        client.comments(id: UUID(), params: params) { result in
             
             switch result {
             case .success: #expect(Bool(false), "Expected failure but received success")
@@ -122,10 +122,10 @@ struct NotionClient_CommentsTests {
             makeComment(richText: [underline])
         ]
         
-        let requestID = UUID().uuidString
+        let requestID = UUID()
         
         var combinedParams = BaseQueryParams().asParams
-        combinedParams["block_id"] = requestID
+        combinedParams["block_id"] = requestID.uuidString
         
         let expectedURL = URLBuilder()
             .url(
@@ -163,7 +163,7 @@ struct NotionClient_CommentsTests {
         
         let request = try Comm
             .CreateRequest(
-                parent: .page(UUID().uuidString),
+                parent: .page(UUID()),
                 richText: [],
                 attachments: [],
                 displayName: .custom(name: "Bot")

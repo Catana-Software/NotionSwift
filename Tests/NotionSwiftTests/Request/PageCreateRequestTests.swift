@@ -10,7 +10,8 @@ import XCTest
 // swiftlint:disable line_length
 final class PageCreateRequestTests: XCTestCase {
     func test_propertiesEncoding_case01() throws {
-        let parentId = Page.Identifier("12345")
+        let id = UUIDv4()
+        let parentId = Page.Identifier(id)
         let given = PageCreateRequest(
             parent: .page(parentId),
             properties: ["title": .init(type: .title([.init(string: "Lorem ipsum")]))],
@@ -18,12 +19,17 @@ final class PageCreateRequestTests: XCTestCase {
         )
 
         let result = try encodeToJson(given)
+        
+        let expected = """
+        {"children":[],"parent":{"page_id":"\(id.uuidString)"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}
+        """
 
-        XCTAssertEqual(result, #"{"children":[],"parent":{"page_id":"12345"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}"#)
+        XCTAssertEqual(result, expected)
     }
 
     func test_propertiesAndChildrenEncoding_case01() throws {
-        let parentId = Page.Identifier("12345")
+        let id = UUIDv4()
+        let parentId = Page.Identifier(id)
         let children: [WriteBlock] = [
             .paragraph(["Lorem ipsum dolor sit amet, "], color: .default)
         ]
@@ -34,12 +40,17 @@ final class PageCreateRequestTests: XCTestCase {
         )
 
         let result = try encodeToJson(given)
+        
+        let expected = """
+        {"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"\(id.uuidString)"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}
+        """
 
-        XCTAssertEqual(result, #"{"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"12345"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}"#)
+        XCTAssertEqual(result, expected)
     }
 
     func test_childrenEncoding_case01() throws {
-        let parentId = Page.Identifier("12345")
+        let id = UUIDv4()
+        let parentId = Page.Identifier(id)
         let children: [WriteBlock] = [
             .paragraph(["Lorem ipsum dolor sit amet, "])
         ]
@@ -51,12 +62,17 @@ final class PageCreateRequestTests: XCTestCase {
         )
 
         let result = try encodeToJson(given)
+        
+        let expected = """
+        {"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"\(id.uuidString)"},"properties":{}}
+        """
 
-        XCTAssertEqual(result, #"{"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"12345"},"properties":{}}"#)
+        XCTAssertEqual(result, expected)
     }
     
     func test_childrenEncoding_case02() throws {
-        let parentId = Page.Identifier("12345")
+        let id = UUIDv4()
+        let parentId = Page.Identifier(id)
         let children: [WriteBlock] = [
             .columnList(columns: [
                 .column([
@@ -75,7 +91,11 @@ final class PageCreateRequestTests: XCTestCase {
         )
 
         let result = try encodeToJson(given)
+        
+        let expected = """
+        {"children":[{"column_list":{"children":[{"column":{"children":[{"paragraph":{"color":"yellow","rich_text":[{"text":{"content":"Column 1"},"type":"text"}]},"type":"paragraph"}]},"type":"column"},{"column":{"children":[{"paragraph":{"color":"green","rich_text":[{"text":{"content":"Column 2"},"type":"text"}]},"type":"paragraph"}]},"type":"column"}]},"object":"block","type":"column_list"}],"parent":{"page_id":"\(id.uuidString)"},"properties":{}}
+        """
 
-        XCTAssertEqual(result, #"{"children":[{"column_list":{"children":[{"column":{"children":[{"paragraph":{"color":"yellow","rich_text":[{"text":{"content":"Column 1"},"type":"text"}]},"type":"paragraph"}]},"type":"column"},{"column":{"children":[{"paragraph":{"color":"green","rich_text":[{"text":{"content":"Column 2"},"type":"text"}]},"type":"paragraph"}]},"type":"column"}]},"object":"block","type":"column_list"}],"parent":{"page_id":"12345"},"properties":{}}"#)
+        XCTAssertEqual(result, expected)
     }
 }

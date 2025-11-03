@@ -23,12 +23,13 @@ struct Comment_CreateRequestTests {
     @Test(.disabled("Unable to decode API doc sample"))
     func decodesDocsSampleRequest() throws {
         
-        let id = "2d0a1ffaf-a4d8-4acf-a1ed-abae6e110418"
+        // Sample UUID provided is also invalid
+        let id = try #require(UUIDv4(uuidString: "2d0a1ffaf-a4d8-4acf-a1ed-abae6e110418"))
         
         let json = """
         {
           "parent": {
-            "page_id": "\(id)"
+            "page_id": "\(id.uuidString)"
           },
           "rich_text": [
             {
@@ -58,8 +59,8 @@ struct Comment_CreateRequestTests {
     
     @Test func initWithParentThrowsOnGtr3Attachments() {
         
-        let blockParent = Comm.Parent.block(UUID().uuidString)
-        let pageParent = Comm.Parent.page(UUID().uuidString)
+        let blockParent = Comm.Parent.block(UUIDv4())
+        let pageParent = Comm.Parent.page(UUIDv4())
         
         let displayNameCustom = Comm.DisplayNameRequest.custom(name: "Name")
         let displayNameIntegration = Comm.DisplayNameRequest.integration
@@ -108,7 +109,7 @@ struct Comment_CreateRequestTests {
                 #expect(throws: CreateRequest.RequestError.self) {
                     
                     let _ = try CreateRequest(
-                        discussionID: UUID().uuidString,
+                        discussionID: UUIDv4(),
                         richText: makeRichText(count: .random(in: 0...10)),
                         attachments: makeAttachments(count: count),
                         displayName: displayName
@@ -126,8 +127,8 @@ struct Comment_CreateRequestTests {
     /// - Note: Uses an empty RichText property to allow codable testing
     @Test func codableParentInit() throws {
         
-        let blockParent = Comm.Parent.block(UUID().uuidString)
-        let pageParent = Comm.Parent.page(UUID().uuidString)
+        let blockParent = Comm.Parent.block(UUIDv4())
+        let pageParent = Comm.Parent.page(UUIDv4())
         
         let displayNameCustom = Comm.DisplayNameRequest.custom(name: "Name")
         let displayNameIntegration = Comm.DisplayNameRequest.integration
@@ -169,7 +170,7 @@ struct Comment_CreateRequestTests {
         for displayName in displayNames {
             
             let request = try CreateRequest(
-                discussionID: UUID().uuidString,
+                discussionID: UUIDv4(),
                 richText: [],
                 attachments: makeAttachments(count: .random(in: 0..<3)),
                 displayName: displayName
@@ -188,10 +189,10 @@ struct Comment_CreateRequestTests {
         
         let json = """
         {
-          "discussion_id": "\(UUID().uuidString)",
+          "discussion_id": "\(UUIDv4().uuidString)",
           "parent": {
             "type": "page_id",
-            "page_id": "\(UUID().uuidString)"
+            "page_id": "\(UUIDv4().uuidString)"
           },
           "rich_text": [],
           "attachments": [],
@@ -310,7 +311,7 @@ extension Comment_CreateRequestTests {
     private func makeAttachment() -> AttachmentRequest {
         
         return AttachmentRequest(
-            fileUploadID: UUID().uuidString,
+            fileUploadID: UUIDv4(),
             type: nil
         )
         

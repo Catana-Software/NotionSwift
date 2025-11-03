@@ -4,4 +4,4 @@
 
 import Foundation
 
-public typealias UUIDv4 = String
+public typealias UUIDv4 = UUID

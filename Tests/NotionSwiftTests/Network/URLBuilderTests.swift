@@ -12,7 +12,7 @@ struct URLBuilderTests {
         
         let builder = URLBuilder()
         
-        let uuid = Page.Identifier(UUID().uuidString)
+        let uuid = Page.Identifier(UUIDv4())
         
         let result = builder
             .url(
@@ -22,7 +22,7 @@ struct URLBuilderTests {
             )
         
         #expect(result.path().contains("comments"))
-        #expect(result.path().contains(uuid.rawValue))
+        #expect(result.path().contains(uuid.rawValue.uuidString))
         
         #expect(result.query() == expectedQuery)
         
@@ -32,7 +32,7 @@ struct URLBuilderTests {
         
         let builder = URLBuilder()
         
-        let uuid = Block.Identifier(UUID().uuidString)
+        let uuid = Block.Identifier(UUIDv4())
         
         let result = builder
             .url(
@@ -42,7 +42,7 @@ struct URLBuilderTests {
             )
         
         #expect(result.path().contains("comments"))
-        #expect(result.path().contains(uuid.rawValue))
+        #expect(result.path().contains(uuid.rawValue.uuidString))
         
         #expect(result.query() == expectedQuery)
         
@@ -52,7 +52,7 @@ struct URLBuilderTests {
         
         let builder = URLBuilder()
         
-        let uuid = UUID().uuidString
+        let uuid = UUIDv4()
         
         let result = builder
             .url(
@@ -62,7 +62,7 @@ struct URLBuilderTests {
             )
         
         #expect(result.path().contains("comments"))
-        #expect(result.path().contains(uuid))
+        #expect(result.path().contains(uuid.uuidString))
         
         #expect(result.query() == expectedQuery)
         
@@ -70,10 +70,10 @@ struct URLBuilderTests {
     
     @Test func docsCommentsURLExample() {
         
-        let uuid = UUID().uuidString
+        let uuid = UUIDv4()
         
         var combinedParams = BaseQueryParams().asParams
-        combinedParams["block_id"] = uuid
+        combinedParams["block_id"] = uuid.uuidString
         
         let result = URLBuilder()
             .url(
@@ -82,7 +82,7 @@ struct URLBuilderTests {
                 params: combinedParams
             )
         
-        let expected = "https://api.notion.com/v1/comments?block_id=\(uuid)"
+        let expected = "https://api.notion.com/v1/comments?block_id=\(uuid.uuidString)"
         
         #expect(result.absoluteString == expected)
         

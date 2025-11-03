@@ -55,7 +55,7 @@ public struct ReadBlock: CustomStringConvertible {
     public var description: String {
         
         let values = [
-            id.rawValue,
+            id.rawValue.uuidString,
             "\(type)",
             createdTime.description,
             lastEditedTime.description,

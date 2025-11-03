@@ -9,12 +9,12 @@ struct Comment_ParentTests {
     /// Sample JSON from https://developers.notion.com/reference/parent-object
     @Test func decodesDatabaseSampleResponse() throws {
         
-        let databaseID = "d9824bdc-8445-4327-be8b-5b47500af6ce"
+        let databaseID = try #require(UUIDv4(uuidString: "d9824bdc-8445-4327-be8b-5b47500af6ce"))
         
         let json = """
         {
           "type": "database_id",
-          "database_id": "\(databaseID)"
+          "database_id": "\(databaseID.uuidString)"
         }
         """
         
@@ -36,14 +36,14 @@ struct Comment_ParentTests {
     
     @Test func decodesDatasourceSampleResponse() throws {
         
-        let datasourceID = "1a44be12-0953-4631-b498-9e5817518db8"
-        let databaseID = "d9824bdc-8445-4327-be8b-5b47500af6ce"
+        let datasourceID = try #require(UUIDv4(uuidString: "1a44be12-0953-4631-b498-9e5817518db8"))
+        let databaseID = try #require(UUIDv4(uuidString: "d9824bdc-8445-4327-be8b-5b47500af6ce"))
         
         let json = """
         {
           "type": "data_source_id",
-          "data_source_id": "\(datasourceID)",
-          "database_id": "\(databaseID)"
+          "data_source_id": "\(datasourceID.uuidString)",
+          "database_id": "\(databaseID.uuidString)"
         }
         """
         
@@ -66,12 +66,12 @@ struct Comment_ParentTests {
     
     @Test func decodesPageSampleResponse() throws {
         
-        let pageID = "59833787-2cf9-4fdf-8782-e53db20768a5"
+        let pageID = try #require(UUIDv4(uuidString: "59833787-2cf9-4fdf-8782-e53db20768a5"))
         
         let json = """
         {
           "type": "page_id",
-          "page_id": "\(pageID)"
+          "page_id": "\(pageID.uuidString)"
         }
         """
         
@@ -118,12 +118,12 @@ struct Comment_ParentTests {
     
     @Test func decodesBlockIDSampleResponse() throws {
         
-        let blockID = "7d50a184-5bbe-4d90-8f29-6bec57ed817b"
+        let blockID = try #require(UUIDv4(uuidString: "7d50a184-5bbe-4d90-8f29-6bec57ed817b"))
         
         let json = """
         {
           "type": "block_id",
-          "block_id": "\(blockID)"
+          "block_id": "\(blockID.uuidString)"
         }
         """
         

@@ -42,7 +42,7 @@ extension NotionClient {
     ) {
         
         var combinedParams = params.asParams
-        combinedParams["block_id"] = id
+        combinedParams["block_id"] = id.uuidString
         
         networkClient.get(
             urlBuilder
