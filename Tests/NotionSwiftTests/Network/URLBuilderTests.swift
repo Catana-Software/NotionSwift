@@ -22,7 +22,7 @@ struct URLBuilderTests {
             )
         
         #expect(result.path().contains("comments"))
-        #expect(result.path().contains(uuid.rawValue.uuidString))
+        #expect(result.path().contains(uuid.rawValue.uuidString.lowercased()))
         
         #expect(result.query() == expectedQuery)
         
@@ -42,7 +42,7 @@ struct URLBuilderTests {
             )
         
         #expect(result.path().contains("comments"))
-        #expect(result.path().contains(uuid.rawValue.uuidString))
+        #expect(result.path().contains(uuid.rawValue.uuidString.lowercased()))
         
         #expect(result.query() == expectedQuery)
         
@@ -62,7 +62,7 @@ struct URLBuilderTests {
             )
         
         #expect(result.path().contains("comments"))
-        #expect(result.path().contains(uuid.uuidString))
+        #expect(result.path().contains(uuid.uuidString.lowercased()))
         
         #expect(result.query() == expectedQuery)
         
@@ -73,7 +73,7 @@ struct URLBuilderTests {
         let uuid = UUIDv4()
         
         var combinedParams = BaseQueryParams().asParams
-        combinedParams["block_id"] = uuid.uuidString
+        combinedParams["block_id"] = uuid.uuidString.lowercased()
         
         let result = URLBuilder()
             .url(
@@ -82,7 +82,7 @@ struct URLBuilderTests {
                 params: combinedParams
             )
         
-        let expected = "https://api.notion.com/v1/comments?block_id=\(uuid.uuidString)"
+        let expected = "https://api.notion.com/v1/comments?block_id=\(uuid.uuidString.lowercased())"
         
         #expect(result.absoluteString == expected)
         

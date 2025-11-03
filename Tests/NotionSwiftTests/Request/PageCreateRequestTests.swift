@@ -21,7 +21,7 @@ final class PageCreateRequestTests: XCTestCase {
         let result = try encodeToJson(given)
         
         let expected = """
-        {"children":[],"parent":{"page_id":"\(id.uuidString)"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}
+        {"children":[],"parent":{"page_id":"\(id.uuidString.lowercased())"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}
         """
 
         XCTAssertEqual(result, expected)
@@ -42,7 +42,7 @@ final class PageCreateRequestTests: XCTestCase {
         let result = try encodeToJson(given)
         
         let expected = """
-        {"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"\(id.uuidString)"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}
+        {"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"\(id.uuidString.lowercased())"},"properties":{"title":{"title":[{"text":{"content":"Lorem ipsum"},"type":"text"}]}}}
         """
 
         XCTAssertEqual(result, expected)
@@ -64,7 +64,7 @@ final class PageCreateRequestTests: XCTestCase {
         let result = try encodeToJson(given)
         
         let expected = """
-        {"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"\(id.uuidString)"},"properties":{}}
+        {"children":[{"object":"block","paragraph":{"color":"default","rich_text":[{"text":{"content":"Lorem ipsum dolor sit amet, "},"type":"text"}]},"type":"paragraph"}],"parent":{"page_id":"\(id.uuidString.lowercased())"},"properties":{}}
         """
 
         XCTAssertEqual(result, expected)
@@ -93,7 +93,7 @@ final class PageCreateRequestTests: XCTestCase {
         let result = try encodeToJson(given)
         
         let expected = """
-        {"children":[{"column_list":{"children":[{"column":{"children":[{"paragraph":{"color":"yellow","rich_text":[{"text":{"content":"Column 1"},"type":"text"}]},"type":"paragraph"}]},"type":"column"},{"column":{"children":[{"paragraph":{"color":"green","rich_text":[{"text":{"content":"Column 2"},"type":"text"}]},"type":"paragraph"}]},"type":"column"}]},"object":"block","type":"column_list"}],"parent":{"page_id":"\(id.uuidString)"},"properties":{}}
+        {"children":[{"column_list":{"children":[{"column":{"children":[{"paragraph":{"color":"yellow","rich_text":[{"text":{"content":"Column 1"},"type":"text"}]},"type":"paragraph"}]},"type":"column"},{"column":{"children":[{"paragraph":{"color":"green","rich_text":[{"text":{"content":"Column 2"},"type":"text"}]},"type":"paragraph"}]},"type":"column"}]},"object":"block","type":"column_list"}],"parent":{"page_id":"\(id.uuidString.lowercased())"},"properties":{}}
         """
 
         XCTAssertEqual(result, expected)

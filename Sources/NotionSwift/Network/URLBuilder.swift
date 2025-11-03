@@ -35,7 +35,11 @@ public class URLBuilder {
         params: [String: String] = [:]
     ) -> URL {
         
-        let newPath = path.replacingOccurrences(of: "{identifier}", with: identifier.uuidString)
+        let newPath = path
+            .replacingOccurrences(
+                of: "{identifier}",
+                with: identifier.uuidString.lowercased()
+            )
         guard let url = URL(string: newPath, relativeTo: base) else {
             fatalError("Invalid path, unable to create a URL: \(path)")
         }

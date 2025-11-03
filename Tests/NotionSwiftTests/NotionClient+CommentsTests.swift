@@ -15,12 +15,12 @@ struct NotionClient_CommentsTests {
         displayName: Comm.DisplayName = .custom(resolvedName: "Bot")
     ) -> Comm {
         Comm(
-            id: UUID(),
+            id: UUIDv4(),
             parent: .workspace,
-            discussionID: UUID(),
+            discussionID: UUIDv4(),
             createdTime: .now,
             lastEditedTime: .now,
-            createdBy: PartialUser(id: .init(UUID())),
+            createdBy: PartialUser(id: .init(UUIDv4())),
             richText: richText,
             attachments: nil,
             displayName: displayName
@@ -36,7 +36,7 @@ struct NotionClient_CommentsTests {
             networkClient: MockNetworkClient(failure: .unsupportedResponseError)
         )
         
-        client.comment(id: UUID()) { result in
+        client.comment(id: UUIDv4()) { result in
             
             switch result {
             case .success: #expect(Bool(false))
@@ -56,7 +56,7 @@ struct NotionClient_CommentsTests {
         
         let comment = makeComment(richText: [richText])
         
-        let requestID = UUID()
+        let requestID = UUIDv4()
         
         let expectedURL = URLBuilder()
             .url(
@@ -95,7 +95,7 @@ struct NotionClient_CommentsTests {
             pageSize: 20
         )
         
-        client.comments(id: UUID(), params: params) { result in
+        client.comments(id: UUIDv4(), params: params) { result in
             
             switch result {
             case .success: #expect(Bool(false), "Expected failure but received success")
@@ -122,7 +122,7 @@ struct NotionClient_CommentsTests {
             makeComment(richText: [underline])
         ]
         
-        let requestID = UUID()
+        let requestID = UUIDv4()
         
         var combinedParams = BaseQueryParams().asParams
         combinedParams["block_id"] = requestID.uuidString
@@ -163,7 +163,7 @@ struct NotionClient_CommentsTests {
         
         let request = try Comm
             .CreateRequest(
-                parent: .page(UUID()),
+                parent: .page(UUIDv4()),
                 richText: [],
                 attachments: [],
                 displayName: .custom(name: "Bot")

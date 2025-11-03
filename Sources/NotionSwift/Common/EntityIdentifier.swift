@@ -12,7 +12,13 @@ public struct EntityIdentifier<Marker, T: Codable>: CustomStringConvertible {
     }
 
     public var description: String {
-        "ID<\(Marker.self)>:\(rawValue)"
+        
+        if let uuid = rawValue as? UUID {
+            return "ID<\(Marker.self)>:\(uuid.uuidString.lowercased())"
+        } else {
+            return "ID<\(Marker.self)>:\(rawValue)"
+        }
+        
     }
 }
 
@@ -34,7 +40,11 @@ extension EntityIdentifier: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        try container.encode(rawValue)
+        if let uuid = rawValue as? UUID {
+            try container.encode(uuid.uuidString.lowercased())
+        } else {
+            try container.encode(rawValue)
+        }
     }
 }
 
