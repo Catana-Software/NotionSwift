@@ -15,6 +15,16 @@ struct UUIDv4Tests {
         
     }
     
+    @Test func initValuePreservedWithCanonicalLowercase() {
+        
+        let uuid = UUID()
+        
+        let v4 = UUIDv4(uuid: uuid)
+        
+        #expect(v4.uuidString == uuid.uuidString.lowercased())
+        
+    }
+    
     @Test func equatable() throws {
     
         let raw = UUID().uuidString

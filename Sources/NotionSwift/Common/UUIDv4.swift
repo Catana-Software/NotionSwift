@@ -20,7 +20,7 @@ public struct UUIDv4 {
     
     /// Creates a new random UUIDv4
     public init() {
-        wrappedValue = UUID()
+        self.init(uuid: UUID())
     }
     
     /// Creates a wrapper from a UUID string
@@ -33,8 +33,19 @@ public struct UUIDv4 {
             let uuid = UUID(uuidString: uuidString)
         else { return nil }
     
-        wrappedValue = uuid
+        self.init(uuid: uuid)
         
+    }
+    
+    /// Creates a `UUIDv4` instance from an existing `UUID`
+    ///
+    /// This initializer wraps the provided `UUID` and preserves its value.
+    /// The public `uuidString` property and any encoded representation will
+    /// be normalized to lowercase to ensure a consistent, canonical form.
+    ///
+    /// - Parameter uuid: The `UUID` to wrap.
+    public init(uuid: UUID) {
+        wrappedValue = uuid
     }
     
 }
