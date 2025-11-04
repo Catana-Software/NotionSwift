@@ -127,8 +127,10 @@ struct Comment_CreateRequestTests {
     /// - Note: Uses an empty RichText property to allow codable testing
     @Test func codableParentInit() throws {
         
-        let blockParent = Comm.Parent.block(UUIDv4())
-        let pageParent = Comm.Parent.page(UUIDv4())
+        let blockParentUUID = UUIDv4()
+        let blockParent = Comm.Parent.block(blockParentUUID)
+        let pageParentUUID = UUIDv4()
+        let pageParent = Comm.Parent.page(pageParentUUID)
         
         let displayNameCustom = Comm.DisplayNameRequest.custom(name: "Name")
         let displayNameIntegration = Comm.DisplayNameRequest.integration
@@ -152,6 +154,10 @@ struct Comment_CreateRequestTests {
                 let decoded: CreateRequest = try decodeFromJson(json)
                 
                 #expect(decoded == request)
+                #expect(
+                    json.contains(blockParentUUID.uuidString) ||
+                    json.contains(pageParentUUID.uuidString)
+                ) // Sanity check we are encoding with lowercase UUID values
                 
             }
             

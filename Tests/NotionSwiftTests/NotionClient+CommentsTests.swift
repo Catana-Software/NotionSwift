@@ -125,7 +125,7 @@ struct NotionClient_CommentsTests {
         let requestID = UUIDv4()
         
         var combinedParams = BaseQueryParams().asParams
-        combinedParams["block_id"] = requestID.uuidString
+        combinedParams["block_id"] = requestID.uuidString.lowercased() // Notion API is case sensitve
         
         let expectedURL = URLBuilder()
             .url(
