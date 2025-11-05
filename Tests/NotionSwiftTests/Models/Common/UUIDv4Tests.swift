@@ -15,6 +15,32 @@ struct UUIDv4Tests {
         
     }
     
+    @Test func noneV4UUIDReturnsNil() {
+        
+        let invalids = [
+            "1893D87F-1339-38D6-B451-4F5FBE228567", // Invalid Version
+            "6EF71350-BD0B-499D-0C4B-FE1EC2FE9C2C", // Invalid y
+            "AA7F9B0D-3200-49B6-1B30-A80B9476DE13", // Invalid both
+        ]
+        
+        for invalid in invalids {
+            
+            #expect(UUIDv4(uuidString: invalid) == nil)
+            
+        }
+        
+    }
+    
+    @Test func uuidStringFromUUID() {
+        
+        let uuid = UUID()
+        
+        let uuidv4 = UUIDv4(uuidString: uuid.uuidString)
+        
+        #expect(uuidv4?.uuidString == uuid.uuidString.lowercased())
+        
+    }
+    
     @Test func initValuePreservedWithCanonicalLowercase() {
         
         let uuid = UUID()
@@ -110,9 +136,9 @@ struct UUIDv4Tests {
 
     @Test func caseInsensitivityEquality() throws {
         
-        let lower = try #require(UUIDv4(uuidString: "123e4567-e89b-12d3-a456-426614174000"))
-        let upper = try #require(UUIDv4(uuidString: "123E4567-E89B-12D3-A456-426614174000"))
-        let mixed = try #require(UUIDv4(uuidString: "123E4567-e89B-12d3-a456-426614174000"))
+        let lower = try #require(UUIDv4(uuidString: "123e4567-e89b-42d3-8456-426614174000"))
+        let upper = try #require(UUIDv4(uuidString: "123E4567-E89B-42D3-8456-426614174000"))
+        let mixed = try #require(UUIDv4(uuidString: "123E4567-e89B-42d3-8456-426614174000"))
 
         #expect(lower == upper)
         #expect(upper == mixed)
@@ -124,8 +150,8 @@ struct UUIDv4Tests {
 
     @Test func caseInsensitivityHashing() throws {
         
-        let lower = try #require(UUIDv4(uuidString: "123e4567-e89b-12d3-a456-426614174000"))
-        let upper = try #require(UUIDv4(uuidString: "123E4567-E89B-12D3-A456-426614174000"))
+        let lower = try #require(UUIDv4(uuidString: "123e4567-e89b-42d3-8456-426614174000"))
+        let upper = try #require(UUIDv4(uuidString: "123E4567-E89B-42D3-8456-426614174000"))
         
         #expect(lower == upper)
         #expect(lower.hashValue == upper.hashValue)

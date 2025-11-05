@@ -130,6 +130,8 @@ struct CommentTests {
     
     /// Sample from comments API response docs at
     /// https://developers.notion.com/reference/retrieve-comment
+    ///
+    /// __Note:__ Alterations made to UUID values to cause valid version 4 UUIDs
     @Test func decodesSampleWithoutAttachments() throws {
         
         // Note: The sample provided at the above URL is not a valid UUIDv4, and so
@@ -137,12 +139,14 @@ struct CommentTests {
         // not intentional case to handle a missing char in a UUIDv4
         // Original first 8: 249911a
         // Altered first 8: 26E409D8
-        let id = try #require(UUIDv4(uuidString: "26E409D8-125e-803e-a164-001cf338b8ec"))
+        // Version nibble added
+        let id = try #require(UUIDv4(uuidString: "26E409D8-125e-403e-a164-001cf338b8ec"))
         
         // This example includes invalid chars
         // Original first 8: 247vw11a
         // Altered first 8: 247ae11a
-        let parentId = try #require(UUIDv4(uuidString: "247ae11a-125e-8053-8e73-d3b3ed4f5768"))
+        // Version nibble added
+        let parentId = try #require(UUIDv4(uuidString: "247ae11a-125e-4053-8e73-d3b3ed4f5768"))
         let parent = """
           {
             "type": "block_id",
@@ -153,7 +157,8 @@ struct CommentTests {
         // Likewise here
         // Original first 8: 1mv7b911a (9)
         // Altered first 8: C83CA45A
-        let discussionID = try #require(UUIDv4(uuidString: "C83CA45A-125e-80df-8c9e-001c179f63ef"))
+        // Version nibble added
+        let discussionID = try #require(UUIDv4(uuidString: "C83CA45A-125e-40df-8c9e-001c179f63ef"))
         
         let createdTime = "2025-08-06T20:36:00.000Z"
         
