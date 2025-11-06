@@ -133,7 +133,101 @@ struct UUIDv4Tests {
         #expect(decoded.id == canonical)
         
     }
-
+    
+    @Test func codableMissingVersion4NibbleThrows() {
+        
+        let uuid = UUID().uuidString.replacingOccurrences(of: "4", with: "1")
+        
+        let payloadString = "{" +
+        "\"id\":\"\(uuid)\"" +
+        "}"
+        
+        let payload = payloadString.data(using: .utf8)!
+        
+        #expect(throws: DecodingError.self) {
+            
+            let _ = try JSONDecoder().decode(Box.self, from: payload)
+            
+        }
+        
+    }
+    
+    @Test func codableMissingVersion4YThrows() {
+        
+        let uuid = "123e4567-e89b-42d3-1456-426614174000"
+        
+        let payloadString = "{" +
+            "\"id\":\"\(uuid)\"" +
+            "}"
+        
+        let payload = payloadString.data(using: .utf8)!
+        
+        #expect(throws: DecodingError.self) {
+            
+            let _ = try JSONDecoder().decode(Box.self, from: payload)
+            
+        }
+        
+    }
+    
+    @Test func codableCaseInsensitive() throws {
+        
+        let make: (String) -> Data = { uuidString in
+            return (
+                "{" +
+                "\"id\":\"\(uuidString)\"" +
+                "}"
+            )
+            .data(using: .utf8)!
+        }
+        
+        let tests = [
+            UUID().uuidString.lowercased(),
+            UUID().uuidString.uppercased()
+        ]
+        
+        for test in tests {
+            
+            let data = make(test)
+            
+            let decoded = try JSONDecoder().decode(Box.self, from: data)
+            
+            #expect(decoded.id.uuidString == test.lowercased())
+            
+        }
+        
+    }
+    
+    @Test func codableThrowsOnCompact() throws {
+        
+        let make: (String) -> Data = { uuidString in
+            return (
+                "{" +
+                "\"id\":\"\(uuidString.replacingOccurrences(of: "-", with: ""))\"" +
+                "}"
+            )
+            .data(using: .utf8)!
+        }
+        
+        let tests = [
+            UUID().uuidString.lowercased(),
+            UUID().uuidString.uppercased()
+        ]
+        
+        for test in tests {
+            
+            let data = make(test)
+            
+            #expect(throws: DecodingError.self) {
+                
+                let _ = try JSONDecoder().decode(Box.self, from: data)
+                
+            }
+            
+        }
+        
+    }
+    
     @Test func caseInsensitivityEquality() throws {
         
         let lower = try #require(UUIDv4(uuidString: "123e4567-e89b-42d3-8456-426614174000"))

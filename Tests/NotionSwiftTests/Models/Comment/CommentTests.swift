@@ -164,10 +164,13 @@ struct CommentTests {
         
         let lastEditedTime = "2025-08-06T20:36:00.000Z"
         
+        // This UUID is also not v4
+        // Original: 2092e755-4912-81f0-98dd-0002ad4ec952
+        // Altered: 2092e755-4912-41f0-98dd-0002ad4ec952
         let createdBy = """
           {
             "object": "user",
-            "id": "2092e755-4912-81f0-98dd-0002ad4ec952"
+            "id": "2092e755-4912-41f0-98dd-0002ad4ec952"
           }
         """
         

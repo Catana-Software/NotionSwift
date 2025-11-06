@@ -103,21 +103,76 @@ extension UUIDv4 {
 
 extension UUIDv4: Codable {
     
-    /// Creates a `UUIDv4` by decoding from the given decoder
+    /// Builds a standardized DecodingError for invalid UUID v4 inputs
     ///
-    /// This initializer decodes a single `UUID` value from the decoder’s
-    /// single-value container. It accepts any valid UUID string representation
-    /// (regardless of letter casing), ensuring case-insensitive value equivalence.
-    /// The internal `wrappedValue` is stored as a `UUID`, while any subsequent
-    /// encoding or string access (`uuidString`) will be normalized to lowercase
+    /// - Parameter decoder: The decoder providing the current coding path.
+    /// - Parameter invalid: The raw string that failed validation.
     ///
-    /// - Parameter decoder: The decoder to read the `UUID` value from.
+    /// - Returns: A `DecodingError.typeMismatch` with a detailed debug description.
+    private static func invalidV4(
+        decoder: any Decoder,
+        invalid: String
+    ) -> DecodingError {
+        
+        let detail = "Invalid version 4 UUID String: \"\(invalid)\""
+        
+        return .typeMismatch(
+            UUIDv4.self,
+            .init(
+                codingPath: decoder.codingPath,
+                debugDescription: detail
+            )
+        )
+        
+    }
+    
+    /// Decodes a `UUIDv4` from a single-value container with RFC 4122 v4 validation
     ///
-    /// - Throws: An error if the decoder does not contain a valid `UUID` in a
-    ///   single-value container or if the data is otherwise corrupted.
+    /// This initializer expects the decoder to contain a single string value representing a
+    /// UUID in the canonical 8-4-4-4-12 hyphenated form. Decoding performs strict validation
+    /// against RFC 4122 version 4 rules:
+    /// - The third group must have the fixed version nibble `4` (i.e. `xxxxxxxx-xxxx-4xxx-...`).
+    /// - The first nibble of the fourth group (the variant) must be one of `8`, `9`, `A`, or `B`
+    ///   (case-insensitive).
+    /// - All hexadecimal characters may be upper- or lowercase; casing is ignored during validation.
+    ///
+    /// On success, the underlying `UUID` value is stored and any subsequent access via
+    /// `uuidString` or encoded output is normalized to lowercase to ensure a canonical form.
+    ///
+    /// Validation details
+    /// - Input must match the canonical hyphenated pattern exactly (8–4–4–4–12).
+    /// - Inputs that do not satisfy version/variant bits or the canonical format are rejected.
+    /// - Examples of invalid inputs include: missing hyphens, non-hex characters, wrong version
+    ///   or an incorrect variant nibble.
+    ///
+    /// Error behavior
+    /// - If the decoder does not contain a string, or the string fails UUID v4 validation,
+    ///   this initializer throws `DecodingError.typeMismatch` with a debug description containing
+    ///   the invalid string.
+    /// - For example, a payload like `{ "created_by": { "id": "not-a-uuid" } }` would
+    ///   fail with `.typeMismatch` at the corresponding coding path (e.g., `created_by.id`).
+    ///
+    /// - Parameter decoder: The decoder to read the UUID string from.
+    ///
+    /// - Throws: `DecodingError.typeMismatch` if the value is not a valid RFC 4122 version 4 UUID.
     public init(from decoder: any Decoder) throws {
+        
         let container = try decoder.singleValueContainer()
-        self.wrappedValue = try container.decode(UUID.self)
+        let uuidString = try container.decode(String.self)
+        
+        guard
+            Self.isValid(uuidV4String: uuidString),
+            let uuid = UUID(uuidString: uuidString)
+        else {
+            throw Self
+                .invalidV4(
+                    decoder: decoder,
+                    invalid: uuidString
+                )
+        }
+        
+        self.init(uuid: uuid)
+        
     }
     
     /// Encodes the `UUIDv4` into the given encoder as a lowercase UUID string
@@ -131,7 +186,7 @@ extension UUIDv4: Codable {
     /// - Throws: An error if the value cannot be encoded into the provided encoder.
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
-        try container.encode(wrappedValue.uuidString.lowercased())
+        try container.encode(uuidString)
     }
     
 }
