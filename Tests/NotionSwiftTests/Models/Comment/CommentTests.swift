@@ -9,12 +9,12 @@ struct CommentTests {
     private func makeComment(richText: [RichText]) -> Comm {
         
         let comment = Comm(
-            id: UUIDv4(),
+            id: LowercaseUUID(),
             parent: .workspace,
-            discussionID: UUIDv4(),
+            discussionID: LowercaseUUID(),
             createdTime: .now,
             lastEditedTime: .now,
-            createdBy: .init(id: .init(UUIDv4())),
+            createdBy: .init(id: .init(LowercaseUUID())),
             richText: richText,
             attachments: nil,
             displayName: .custom(resolvedName: "Bot")
@@ -27,7 +27,7 @@ struct CommentTests {
     /// Sample JSON from https://developers.notion.com/reference/comment-object
     @Test func decodesSampleResponse() throws {
         
-        let id = try #require(UUIDv4(uuidString: "7a793800-3e55-4d5e-8009-2261de026179"))
+        let id = try #require(LowercaseUUID(uuidString: "7a793800-3e55-4d5e-8009-2261de026179"))
         
         let parent = """
           {
@@ -36,7 +36,7 @@ struct CommentTests {
           }
         """
         
-        let discussionID = try #require(UUIDv4(uuidString: "f4be6752-a539-4da2-a8a9-c3953e13bc0b"))
+        let discussionID = try #require(LowercaseUUID(uuidString: "f4be6752-a539-4da2-a8a9-c3953e13bc0b"))
         
         let createdTime = "2022-07-15T21:17:00.000Z"
         
@@ -134,19 +134,9 @@ struct CommentTests {
     /// __Note:__ Alterations made to UUID values to cause valid version 4 UUIDs
     @Test func decodesSampleWithoutAttachments() throws {
         
-        // Note: The sample provided at the above URL is not a valid UUIDv4, and so
-        // it has been altered here, as presumably that is a mistake in the docs, and
-        // not intentional case to handle a missing char in a UUIDv4
-        // Original first 8: 249911a
-        // Altered first 8: 26E409D8
-        // Version nibble added
-        let id = try #require(UUIDv4(uuidString: "26E409D8-125e-403e-a164-001cf338b8ec"))
+        let id = try #require(LowercaseUUID(uuidString: "26E409D8-125e-403e-a164-001cf338b8ec"))
         
-        // This example includes invalid chars
-        // Original first 8: 247vw11a
-        // Altered first 8: 247ae11a
-        // Version nibble added
-        let parentId = try #require(UUIDv4(uuidString: "247ae11a-125e-4053-8e73-d3b3ed4f5768"))
+        let parentId = try #require(LowercaseUUID(uuidString: "247ae11a-125e-4053-8e73-d3b3ed4f5768"))
         let parent = """
           {
             "type": "block_id",
@@ -154,23 +144,16 @@ struct CommentTests {
           }
         """
         
-        // Likewise here
-        // Original first 8: 1mv7b911a (9)
-        // Altered first 8: C83CA45A
-        // Version nibble added
-        let discussionID = try #require(UUIDv4(uuidString: "C83CA45A-125e-40df-8c9e-001c179f63ef"))
+        let discussionID = try #require(LowercaseUUID(uuidString: "C83CA45A-125e-40df-8c9e-001c179f63ef"))
         
         let createdTime = "2025-08-06T20:36:00.000Z"
         
         let lastEditedTime = "2025-08-06T20:36:00.000Z"
         
-        // This UUID is also not v4
-        // Original: 2092e755-4912-81f0-98dd-0002ad4ec952
-        // Altered: 2092e755-4912-41f0-98dd-0002ad4ec952
         let createdBy = """
           {
             "object": "user",
-            "id": "2092e755-4912-41f0-98dd-0002ad4ec952"
+            "id": "2092e755-4912-81f0-98dd-0002ad4ec952"
           }
         """
         
@@ -266,10 +249,10 @@ struct CommentTests {
         let aString = "a string "
         let richText1 = RichText(plainText: aString, type: .text(.init(content: aString)))
         
-        let link = UUIDv4().uuidString
+        let link = LowercaseUUID().uuidString
         let richText2 = RichText(
             plainText: link,
-            type: .mention(.init(type: .page(.init(.init(UUIDv4())))))
+            type: .mention(.init(type: .page(.init(.init(LowercaseUUID())))))
         )
         
         let comment = makeComment(richText: [richText0, richText1, richText2])

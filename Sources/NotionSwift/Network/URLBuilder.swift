@@ -17,7 +17,7 @@ public class URLBuilder {
 
     public func url<T>(
         path: String,
-        identifier: EntityIdentifier<T, UUIDv4>,
+        identifier: EntityIdentifier<T, LowercaseUUID>,
         params: [String: String] = [:]
     ) -> URL {
 
@@ -31,7 +31,7 @@ public class URLBuilder {
     
     public func url(
         path: String,
-        identifier: UUIDv4,
+        identifier: LowercaseUUID,
         params: [String: String] = [:]
     ) -> URL {
         

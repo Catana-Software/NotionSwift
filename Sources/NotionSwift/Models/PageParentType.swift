@@ -24,10 +24,10 @@ extension PageParentType: Codable {
         let type = try container.decode(String.self, forKey: .type).lowercased()
         switch type {
         case CodingKeys.databaseId.stringValue:
-            let value = try container.decode(UUIDv4.self, forKey: .databaseId)
+            let value = try container.decode(LowercaseUUID.self, forKey: .databaseId)
             self = .database(.init(value))
         case CodingKeys.pageId.stringValue:
-            let value = try container.decode(UUIDv4.self, forKey: .pageId)
+            let value = try container.decode(LowercaseUUID.self, forKey: .pageId)
             self = .page(.init(value))
         case CodingKeys.workspace.stringValue:
             self = .workspace

@@ -6,10 +6,10 @@ struct ReadBlockTests {
     
     func endToEndCodable() throws {
         
-        let partialUser = PartialUser(id: .init(UUIDv4()))
+        let partialUser = PartialUser(id: .init(LowercaseUUID()))
         
         let base = ReadBlock(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             archived: .random(),
             type: .divider,
             createdTime: .distantPast,
@@ -28,9 +28,9 @@ struct ReadBlockTests {
     
     @Test func updateChildrenSetsHasChildren() throws {
         
-        let partialUser = PartialUser(id: .init(UUIDv4()))
+        let partialUser = PartialUser(id: .init(LowercaseUUID()))
         let base = ReadBlock(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             archived: .random(),
             type: .divider,
             createdTime: .distantPast,
@@ -41,7 +41,7 @@ struct ReadBlockTests {
         )
         
         let child = ReadBlock(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             archived: .random(),
             type: .divider,
             createdTime: .distantPast,
@@ -70,9 +70,9 @@ struct ReadBlockTests {
     
     @Test func descriptionSkipsChildrenCountWithZero() {
         
-        let partialUser = PartialUser(id: .init(UUIDv4()))
+        let partialUser = PartialUser(id: .init(LowercaseUUID()))
         let base = ReadBlock(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             archived: .random(),
             type: .divider,
             createdTime: .distantPast,
@@ -91,9 +91,9 @@ struct ReadBlockTests {
     
     @Test func descriptionContainsChildrenCount() {
         
-        let partialUser = PartialUser(id: .init(UUIDv4()))
+        let partialUser = PartialUser(id: .init(LowercaseUUID()))
         let base = ReadBlock(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             archived: .random(),
             type: .divider,
             createdTime: .distantPast,
@@ -104,7 +104,7 @@ struct ReadBlockTests {
         )
         
         let child = ReadBlock(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             archived: .random(),
             type: .divider,
             createdTime: .distantPast,

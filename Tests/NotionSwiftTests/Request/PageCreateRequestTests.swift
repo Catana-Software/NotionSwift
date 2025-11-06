@@ -10,7 +10,7 @@ import XCTest
 // swiftlint:disable line_length
 final class PageCreateRequestTests: XCTestCase {
     func test_propertiesEncoding_case01() throws {
-        let id = UUIDv4()
+        let id = LowercaseUUID()
         let parentId = Page.Identifier(id)
         let given = PageCreateRequest(
             parent: .page(parentId),
@@ -28,7 +28,7 @@ final class PageCreateRequestTests: XCTestCase {
     }
 
     func test_propertiesAndChildrenEncoding_case01() throws {
-        let id = UUIDv4()
+        let id = LowercaseUUID()
         let parentId = Page.Identifier(id)
         let children: [WriteBlock] = [
             .paragraph(["Lorem ipsum dolor sit amet, "], color: .default)
@@ -49,7 +49,7 @@ final class PageCreateRequestTests: XCTestCase {
     }
 
     func test_childrenEncoding_case01() throws {
-        let id = UUIDv4()
+        let id = LowercaseUUID()
         let parentId = Page.Identifier(id)
         let children: [WriteBlock] = [
             .paragraph(["Lorem ipsum dolor sit amet, "])
@@ -71,7 +71,7 @@ final class PageCreateRequestTests: XCTestCase {
     }
     
     func test_childrenEncoding_case02() throws {
-        let id = UUIDv4()
+        let id = LowercaseUUID()
         let parentId = Page.Identifier(id)
         let children: [WriteBlock] = [
             .columnList(columns: [

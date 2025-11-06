@@ -12,19 +12,19 @@ extension Comment {
         /// The comment belongs to a database.
         ///
         /// - Parameter id: The identifier of the database that owns the comment.
-        case database(UUIDv4)
+        case database(LowercaseUUID)
         
         /// The comment belongs to a data source inside a specific database.
         ///
         /// - Parameter id: The identifier of the data source.
         /// - Parameter databaseId: The identifier of the database that contains the
         ///   data source.
-        case dataSource(id: UUIDv4, databaseId: UUIDv4)
+        case dataSource(id: LowercaseUUID, databaseId: LowercaseUUID)
         
         /// The comment belongs to a page.
         ///
         /// - Parameter id: The identifier of the page that owns the comment.
-        case page(UUIDv4)
+        case page(LowercaseUUID)
         
         /// The comment belongs to the current workspace (no additional identifier required).
         case workspace
@@ -33,7 +33,7 @@ extension Comment {
         /// inline in a chunk of text.
         ///
         /// - Parameter id: The identifier of the block that owns the comment.
-        case block(UUIDv4)
+        case block(LowercaseUUID)
         
     }
     
@@ -58,23 +58,23 @@ extension Comment.Parent: Codable {
         switch type {
             
         case CodingKeys.databaseId.rawValue:
-            let id = try container.decode(UUIDv4.self, forKey: .databaseId)
+            let id = try container.decode(LowercaseUUID.self, forKey: .databaseId)
             self = .database(id)
             
         case CodingKeys.dataSourceId.rawValue:
-            let ds = try container.decode(UUIDv4.self, forKey: .dataSourceId)
-            let db = try container.decode(UUIDv4.self, forKey: .databaseId)
+            let ds = try container.decode(LowercaseUUID.self, forKey: .dataSourceId)
+            let db = try container.decode(LowercaseUUID.self, forKey: .databaseId)
             self = .dataSource(id: ds, databaseId: db)
             
         case CodingKeys.pageId.rawValue:
-            let id = try container.decode(UUIDv4.self, forKey: .pageId)
+            let id = try container.decode(LowercaseUUID.self, forKey: .pageId)
             self = .page(id)
             
         case CodingKeys.workspace.rawValue:
             self = .workspace
             
         case CodingKeys.blockID.rawValue:
-            let id = try container.decode(UUIDv4.self, forKey: .blockID)
+            let id = try container.decode(LowercaseUUID.self, forKey: .blockID)
             self = .block(id)
             
         default:

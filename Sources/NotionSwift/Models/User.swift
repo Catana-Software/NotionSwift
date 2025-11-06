@@ -23,7 +23,7 @@ public struct User {
         public init() {}
     }
 
-    public typealias Identifier = EntityIdentifier<User, UUIDv4>
+    public typealias Identifier = EntityIdentifier<User, LowercaseUUID>
     public let id: Identifier
     public let type: UserType?
     public let name: String?

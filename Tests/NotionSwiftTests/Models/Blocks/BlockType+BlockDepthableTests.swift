@@ -19,7 +19,7 @@ struct BlockType_BlockDepthableTests {
             .equation(expression: "1+1"),
             .divider,
             .breadcrumb,
-            .linkToPage(.page(Page.Identifier(UUIDv4()))),
+            .linkToPage(.page(Page.Identifier(LowercaseUUID()))),
             .unsupported(type: "unknown")
         ]
         
@@ -147,7 +147,7 @@ struct BlockType_BlockDepthableTests {
     
     @Test func syncedBlockReportsZero() {
         
-        let block: BlockType = .syncedBlock(.reference(.init(UUIDv4())))
+        let block: BlockType = .syncedBlock(.reference(.init(LowercaseUUID())))
         
         #expect(block.childrenDepth == 0)
         

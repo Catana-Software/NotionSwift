@@ -15,12 +15,12 @@ struct NotionClient_CommentsTests {
         displayName: Comm.DisplayName = .custom(resolvedName: "Bot")
     ) -> Comm {
         Comm(
-            id: UUIDv4(),
+            id: LowercaseUUID(),
             parent: .workspace,
-            discussionID: UUIDv4(),
+            discussionID: LowercaseUUID(),
             createdTime: .now,
             lastEditedTime: .now,
-            createdBy: PartialUser(id: .init(UUIDv4())),
+            createdBy: PartialUser(id: .init(LowercaseUUID())),
             richText: richText,
             attachments: nil,
             displayName: displayName
@@ -36,7 +36,7 @@ struct NotionClient_CommentsTests {
             networkClient: MockNetworkClient(failure: .unsupportedResponseError)
         )
         
-        client.comment(id: UUIDv4()) { result in
+        client.comment(id: LowercaseUUID()) { result in
             
             switch result {
             case .success: #expect(Bool(false))
@@ -56,7 +56,7 @@ struct NotionClient_CommentsTests {
         
         let comment = makeComment(richText: [richText])
         
-        let requestID = UUIDv4()
+        let requestID = LowercaseUUID()
         
         let expectedURL = URLBuilder()
             .url(
@@ -95,7 +95,7 @@ struct NotionClient_CommentsTests {
             pageSize: 20
         )
         
-        client.comments(id: UUIDv4(), params: params) { result in
+        client.comments(id: LowercaseUUID(), params: params) { result in
             
             switch result {
             case .success: #expect(Bool(false), "Expected failure but received success")
@@ -122,7 +122,7 @@ struct NotionClient_CommentsTests {
             makeComment(richText: [underline])
         ]
         
-        let requestID = UUIDv4()
+        let requestID = LowercaseUUID()
         
         var combinedParams = BaseQueryParams().asParams
         combinedParams["block_id"] = requestID.uuidString.lowercased() // Notion API is case sensitve
@@ -163,7 +163,7 @@ struct NotionClient_CommentsTests {
         
         let request = try Comm
             .CreateRequest(
-                parent: .page(UUIDv4()),
+                parent: .page(LowercaseUUID()),
                 richText: [],
                 attachments: [],
                 displayName: .custom(name: "Bot")

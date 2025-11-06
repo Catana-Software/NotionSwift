@@ -24,7 +24,7 @@ struct Comment_CreateRequestTests {
     func decodesDocsSampleRequest() throws {
         
         // Sample UUID provided is also invalid
-        let id = try #require(UUIDv4(uuidString: "2d0a1ffaf-a4d8-4acf-a1ed-abae6e110418"))
+        let id = try #require(LowercaseUUID(uuidString: "2d0a1ffaf-a4d8-4acf-a1ed-abae6e110418"))
         
         let json = """
         {
@@ -59,8 +59,8 @@ struct Comment_CreateRequestTests {
     
     @Test func initWithParentThrowsOnGtr3Attachments() {
         
-        let blockParent = Comm.Parent.block(UUIDv4())
-        let pageParent = Comm.Parent.page(UUIDv4())
+        let blockParent = Comm.Parent.block(LowercaseUUID())
+        let pageParent = Comm.Parent.page(LowercaseUUID())
         
         let displayNameCustom = Comm.DisplayNameRequest.custom(name: "Name")
         let displayNameIntegration = Comm.DisplayNameRequest.integration
@@ -109,7 +109,7 @@ struct Comment_CreateRequestTests {
                 #expect(throws: CreateRequest.RequestError.self) {
                     
                     let _ = try CreateRequest(
-                        discussionID: UUIDv4(),
+                        discussionID: LowercaseUUID(),
                         richText: makeRichText(count: .random(in: 0...10)),
                         attachments: makeAttachments(count: count),
                         displayName: displayName
@@ -127,9 +127,9 @@ struct Comment_CreateRequestTests {
     /// - Note: Uses an empty RichText property to allow codable testing
     @Test func codableParentInit() throws {
         
-        let blockParentUUID = UUIDv4()
+        let blockParentUUID = LowercaseUUID()
         let blockParent = Comm.Parent.block(blockParentUUID)
-        let pageParentUUID = UUIDv4()
+        let pageParentUUID = LowercaseUUID()
         let pageParent = Comm.Parent.page(pageParentUUID)
         
         let displayNameCustom = Comm.DisplayNameRequest.custom(name: "Name")
@@ -176,7 +176,7 @@ struct Comment_CreateRequestTests {
         for displayName in displayNames {
             
             let request = try CreateRequest(
-                discussionID: UUIDv4(),
+                discussionID: LowercaseUUID(),
                 richText: [],
                 attachments: makeAttachments(count: .random(in: 0..<3)),
                 displayName: displayName
@@ -195,10 +195,10 @@ struct Comment_CreateRequestTests {
         
         let json = """
         {
-          "discussion_id": "\(UUIDv4().uuidString)",
+          "discussion_id": "\(LowercaseUUID().uuidString)",
           "parent": {
             "type": "page_id",
-            "page_id": "\(UUIDv4().uuidString)"
+            "page_id": "\(LowercaseUUID().uuidString)"
           },
           "rich_text": [],
           "attachments": [],
@@ -317,7 +317,7 @@ extension Comment_CreateRequestTests {
     private func makeAttachment() -> AttachmentRequest {
         
         return AttachmentRequest(
-            fileUploadID: UUIDv4(),
+            fileUploadID: LowercaseUUID(),
             type: nil
         )
         

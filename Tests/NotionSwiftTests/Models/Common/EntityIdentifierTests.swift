@@ -7,7 +7,7 @@ struct EntityIdentifierTests {
     
     @Test func pageEncodesAndRoundTrips() throws {
         
-        let uuid = UUIDv4()
+        let uuid = LowercaseUUID()
         let lowercasedUUID = uuid.uuidString.lowercased()
         let identifier: Page.Identifier = .init(uuid)
         
@@ -22,7 +22,7 @@ struct EntityIdentifierTests {
     
     @Test func blockEncodesAndRoundTrips() throws {
         
-        let uuid = UUIDv4()
+        let uuid = LowercaseUUID()
         let lowercasedUUID = uuid.uuidString.lowercased()
         let identifier: Block.Identifier = .init(uuid)
         
@@ -77,7 +77,7 @@ struct EntityIdentifierTests {
     
     @Test func descriptionFromUUIDLowercased() {
         
-        let uuid = UUIDv4()
+        let uuid = LowercaseUUID()
         let identifier: Page.Identifier = .init(uuid)
         
         #expect(identifier.description.contains(uuid.uuidString.lowercased()))

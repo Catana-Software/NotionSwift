@@ -13,7 +13,7 @@ extension Comment {
     public struct AttachmentRequest {
         
         /// ID of a File Upload with a status of "uploaded"
-        public let fileUploadID: UUIDv4
+        public let fileUploadID: LowercaseUUID
         
         /// An optional with possible value of "file&lowbar;upload". The API reference lists
         /// this property as optional with a single enum case and does not specify under what
@@ -31,7 +31,7 @@ extension Comment {
         ///   Notion API marks this as optional with a single supported value and does not specify
         ///   when it is required; it is generally acceptable to omit this value.
         public init(
-            fileUploadID: UUIDv4,
+            fileUploadID: LowercaseUUID,
             type: String?
         ) {
             

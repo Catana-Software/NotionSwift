@@ -5,7 +5,7 @@
 import Foundation
 
 public struct Database: Equatable, Sendable {
-    public typealias Identifier = EntityIdentifier<Database, UUIDv4>
+    public typealias Identifier = EntityIdentifier<Database, LowercaseUUID>
     public typealias PropertyName = String
     public let id: Identifier
     public let url: String

@@ -66,12 +66,12 @@ extension PagePropertyType {
     }
 
     public struct MultiSelectPropertyValue {
-        public let id: EntityIdentifier<MultiSelectPropertyValue, UUIDv4>?
+        public let id: EntityIdentifier<MultiSelectPropertyValue, LowercaseUUID>?
         public let name: String?
         public let color: String?
 
         public init(
-            id: EntityIdentifier<MultiSelectPropertyValue, UUIDv4>?,
+            id: EntityIdentifier<MultiSelectPropertyValue, LowercaseUUID>?,
             name: String?,
             color: String?
         ) {
@@ -113,12 +113,12 @@ extension PagePropertyType {
     }
     
     public struct StatusPropertyValue {
-        public let id: EntityIdentifier<StatusPropertyValue, UUIDv4>?
+        public let id: EntityIdentifier<StatusPropertyValue, LowercaseUUID>?
         public let name: String?
         public let color: String?
 
         public init(
-            id: EntityIdentifier<StatusPropertyValue, UUIDv4>?,
+            id: EntityIdentifier<StatusPropertyValue, LowercaseUUID>?,
             name: String?,
             color: String?
         ) {

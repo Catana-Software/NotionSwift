@@ -12,7 +12,7 @@ extension NotionClient {
     /// - Parameter completed: A closure called with the result containing `Comment` on success,
     ///   or a `NotionClientError` on failure.
     public func comment(
-        id: UUIDv4,
+        id: LowercaseUUID,
         completed: @Sendable @escaping (Result<Comment, NotionClientError>) -> Void
     ) {
         
@@ -36,7 +36,7 @@ extension NotionClient {
     /// - Parameter completed: A closure called with the result containing a
     ///   `ListResponse` of `Comment` on success, or a `NotionClientError` on failure.
     public func comments(
-        id: UUIDv4,
+        id: LowercaseUUID,
         params: BaseQueryParams,
         completed: @Sendable @escaping (Result<ListResponse<Comment>, NotionClientError>) -> Void
     ) {

@@ -47,7 +47,7 @@ extension DatabasePropertyType {
 
 extension DatabasePropertyType {
     public struct SelectOption: Equatable, Sendable {
-        public typealias Identifier = EntityIdentifier<SelectOption, UUIDv4>
+        public typealias Identifier = EntityIdentifier<SelectOption, LowercaseUUID>
         public let name: String
         public let id: Identifier
         public let color: String
@@ -109,7 +109,7 @@ extension DatabasePropertyType {
 
 extension DatabasePropertyType {
     public struct StatusPropertConfirguration: Equatable, Sendable {
-        public typealias OptionIdentifier = EntityIdentifier<SelectOption, UUIDv4>
+        public typealias OptionIdentifier = EntityIdentifier<SelectOption, LowercaseUUID>
         
         public struct StatusOption: Equatable, Sendable {
             public let id: OptionIdentifier

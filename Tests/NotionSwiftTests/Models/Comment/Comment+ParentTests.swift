@@ -9,7 +9,7 @@ struct Comment_ParentTests {
     /// Sample JSON from https://developers.notion.com/reference/parent-object
     @Test func decodesDatabaseSampleResponse() throws {
         
-        let databaseID = try #require(UUIDv4(uuidString: "d9824bdc-8445-4327-be8b-5b47500af6ce"))
+        let databaseID = try #require(LowercaseUUID(uuidString: "d9824bdc-8445-4327-be8b-5b47500af6ce"))
         
         let json = """
         {
@@ -36,8 +36,8 @@ struct Comment_ParentTests {
     
     @Test func decodesDatasourceSampleResponse() throws {
         
-        let datasourceID = try #require(UUIDv4(uuidString: "1a44be12-0953-4631-b498-9e5817518db8"))
-        let databaseID = try #require(UUIDv4(uuidString: "d9824bdc-8445-4327-be8b-5b47500af6ce"))
+        let datasourceID = try #require(LowercaseUUID(uuidString: "1a44be12-0953-4631-b498-9e5817518db8"))
+        let databaseID = try #require(LowercaseUUID(uuidString: "d9824bdc-8445-4327-be8b-5b47500af6ce"))
         
         let json = """
         {
@@ -66,7 +66,7 @@ struct Comment_ParentTests {
     
     @Test func decodesPageSampleResponse() throws {
         
-        let pageID = try #require(UUIDv4(uuidString: "59833787-2cf9-4fdf-8782-e53db20768a5"))
+        let pageID = try #require(LowercaseUUID(uuidString: "59833787-2cf9-4fdf-8782-e53db20768a5"))
         
         let json = """
         {
@@ -118,7 +118,7 @@ struct Comment_ParentTests {
     
     @Test func decodesBlockIDSampleResponse() throws {
         
-        let blockID = try #require(UUIDv4(uuidString: "7d50a184-5bbe-4d90-8f29-6bec57ed817b"))
+        let blockID = try #require(LowercaseUUID(uuidString: "7d50a184-5bbe-4d90-8f29-6bec57ed817b"))
         
         let json = """
         {

@@ -35,7 +35,7 @@ import Foundation
         public let object: String = "comment"
         
         /// Unique identifier of the comment
-        public let id: UUIDv4
+        public let id: LowercaseUUID
         
         /// Information about the comment's parent block or entity
         ///
@@ -47,7 +47,7 @@ import Foundation
         ///
         /// Multiple comments that are part of the same conversation share the same
         /// `discussionID`
-        public let discussionID: UUIDv4
+        public let discussionID: LowercaseUUID
         
         /// The date and time when this comment was created
         public let createdTime: Date
@@ -98,9 +98,9 @@ import Foundation
         /// - Parameter attachments: The optional attachments of the comment.
         /// - Parameter displayName: The custome display name of the comment.
         public init(
-            id: UUIDv4,
+            id: LowercaseUUID,
             parent: Parent,
-            discussionID: UUIDv4,
+            discussionID: LowercaseUUID,
             createdTime: Date,
             lastEditedTime: Date,
             createdBy: PartialUser,

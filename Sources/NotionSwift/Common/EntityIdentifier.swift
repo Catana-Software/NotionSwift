@@ -38,9 +38,9 @@ extension EntityIdentifier: Codable {
     }
 }
 
-extension EntityIdentifier where T == UUIDv4 {
+extension EntityIdentifier where T == LowercaseUUID {
     public init() {
-        self.init(UUIDv4())
+        self.init(LowercaseUUID())
     }
 }
 

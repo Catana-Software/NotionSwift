@@ -39,7 +39,7 @@ extension Comment {
         ///
         /// Mutually exclusive with `parent`. Provide this to add a comment within an
         /// existing discussion; leave `nil` when starting a new discussion on a page/block.
-        public let discussionID: UUIDv4?
+        public let discussionID: LowercaseUUID?
         
         /// The comment body as an ordered array of rich text objects.
         ///
@@ -107,7 +107,7 @@ extension Comment {
         /// - Throws: `RequestError.overAttachmentLimit(count:)` if `attachments.count` is greater
         ///   than 3.
         public init(
-            discussionID: UUIDv4,
+            discussionID: LowercaseUUID,
             richText: [RichText],
             attachments: [AttachmentRequest],
             displayName: DisplayNameRequest
@@ -162,7 +162,7 @@ extension Comment.CreateRequest: Codable {
     /// Expected keys (snake_case where applicable):
     /// - `parent`: Optional object identifying the target page or block. Mutually exclusive
     ///   with `discussion_id`.
-    /// - `discussion_id`: Optional UUIDv4 identifying an existing discussion. Mutually
+    /// - `discussion_id`: Optional LowercaseUUID identifying an existing discussion. Mutually
     ///   exclusive with `parent`.
     /// - `rich_text`: Required array of `RichText` objects that make up the comment body.
     /// - `attachments`: Required array of `AttachmentRequest` objects. The count is validated
@@ -184,7 +184,7 @@ extension Comment.CreateRequest: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         let parent = try container.decodeIfPresent(Comment.Parent.self, forKey: .parent)
-        let discussionID = try container.decodeIfPresent(UUIDv4.self, forKey: .discussionID)
+        let discussionID = try container.decodeIfPresent(LowercaseUUID.self, forKey: .discussionID)
         let richText = try container.decode([RichText].self, forKey: .richText)
         let attachments = try container.decode([Comment.AttachmentRequest].self, forKey: .attachments)
         let displayName = try container.decode(Comment.DisplayNameRequest.self, forKey: .displayName)

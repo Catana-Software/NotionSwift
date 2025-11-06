@@ -7,7 +7,7 @@ struct UserTests {
     @Test func personCodable() throws {
         
         let user = User(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             type: .person(.init(email: "example@example.com")),
             name: "Username",
             avatarURL: URL.temporaryDirectory.path()
@@ -23,14 +23,14 @@ struct UserTests {
     @Test func personEquality() throws {
         
         let base = User(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             type: .person(.init(email: "example@example.com")),
             name: "Username",
             avatarURL: URL.temporaryDirectory.path()
         )
         
         let users = [
-            base.updated(id: .init(UUIDv4())),
+            base.updated(id: .init(LowercaseUUID())),
             base.updated(type: .bot(User.Bot())),
             base.updated(name: "Another name"),
             base.updated(avatarURL: URL.temporaryDirectory.appendingPathComponent("dir").path())
@@ -49,7 +49,7 @@ struct UserTests {
         let bot = User.Bot()
         
         let user = User(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             type: .bot(bot),
             name: "Botname",
             avatarURL: URL.temporaryDirectory.path()
@@ -67,7 +67,7 @@ struct UserTests {
     func unknownCodable() throws {
         
         let user = User(
-            id: .init(UUIDv4()),
+            id: .init(LowercaseUUID()),
             type: .unknown,
             name: "A name",
             avatarURL: URL.temporaryDirectory.path()

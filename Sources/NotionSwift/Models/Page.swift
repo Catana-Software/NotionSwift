@@ -6,7 +6,7 @@ import Foundation
 
 /// The Page object contains **the property values** of a single Notion page.
 public struct Page {
-    public typealias Identifier = EntityIdentifier<Page, UUIDv4>
+    public typealias Identifier = EntityIdentifier<Page, LowercaseUUID>
     public typealias PropertyName = String
     public let id: Identifier
     public let createdTime: Date
@@ -63,7 +63,7 @@ extension Page: Decodable {
     }
 }
 
-extension EntityIdentifier where Marker == Page, T == UUIDv4 {
+extension EntityIdentifier where Marker == Page, T == LowercaseUUID {
     public var toBlockIdentifier: Block.Identifier {
         return Block.Identifier(self.rawValue)
     }

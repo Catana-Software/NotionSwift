@@ -12,7 +12,7 @@ struct URLBuilderTests {
         
         let builder = URLBuilder()
         
-        let uuid = Page.Identifier(UUIDv4())
+        let uuid = Page.Identifier(LowercaseUUID())
         
         let result = builder
             .url(
@@ -32,7 +32,7 @@ struct URLBuilderTests {
         
         let builder = URLBuilder()
         
-        let uuid = Block.Identifier(UUIDv4())
+        let uuid = Block.Identifier(LowercaseUUID())
         
         let result = builder
             .url(
@@ -48,11 +48,11 @@ struct URLBuilderTests {
         
     }
     
-    @Test func properlyFormsUUIDv4ID() {
+    @Test func properlyFormsLowercaseUUIDID() {
         
         let builder = URLBuilder()
         
-        let uuid = UUIDv4()
+        let uuid = LowercaseUUID()
         
         let result = builder
             .url(
@@ -70,7 +70,7 @@ struct URLBuilderTests {
     
     @Test func docsCommentsURLExample() {
         
-        let uuid = UUIDv4()
+        let uuid = LowercaseUUID()
         
         var combinedParams = BaseQueryParams().asParams
         combinedParams["block_id"] = uuid.uuidString.lowercased()
